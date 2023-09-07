@@ -4,7 +4,7 @@ import { ProductListItemDescription } from "@/ui/atoms/ProductListItemDescriptio
 
 export const ProductListItem = ({ product }: ProductListItemsProps) => {
 	return (
-		<li className="cursor-pointer">
+		<li>
 			<article>
 				<ProductCoverImage image={{ src: product.coverImage.src, alt: product.coverImage.alt }} />
 				<ProductListItemDescription product={product} />
