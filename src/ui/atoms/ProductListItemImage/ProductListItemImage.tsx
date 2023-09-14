@@ -10,7 +10,7 @@ export const ProductCoverImage = ({
 				alt={alt}
 				width={width}
 				height={height}
-				className="h-full w-full object-center p-4 transition-transform hover:scale-105"
+				className="h-full w-full object-contain object-center p-4 transition-transform hover:scale-105"
 			/>
 		</div>
 	);
