@@ -2,4 +2,5 @@ import { type ProductListItemType } from "@/ui/molecules/ProductListItem/Product
 
 export type ProductsListType = {
 	products: ProductListItemType[];
+	isListView?: boolean;
 };
