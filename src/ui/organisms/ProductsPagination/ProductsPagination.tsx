@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { getMaxPages } from "@/utils/getMaxPagesNumber";
+import { PaginationButton } from "@/ui/atoms/PaginationButton/PaginationButton";
 
 export const ProductsPagination = ({
 	currentPage = 1,
@@ -14,35 +14,19 @@ export const ProductsPagination = ({
 
 	return (
 		<div className="mx-auto mt-8 flex items-center justify-center gap-4">
-			{currentPage == 1 ? (
-				<button disabled className="cursor-not-allowed opacity-60">
-					{"<<"}
-				</button>
-			) : (
-				<Link href={"/products/1"}>{"<<"}</Link>
-			)}
-			{currentPage > 1 ? (
-				<Link href={`/products/${currentPage - 1}`}>{"<"}</Link>
-			) : (
-				<button disabled className="cursor-not-allowed opacity-60">
-					{"<"}
-				</button>
-			)}
+			<PaginationButton url={"/products/1"} disabled={currentPage <= 1}>
+				{"<<"}
+			</PaginationButton>
+			<PaginationButton url={`/products/${currentPage - 1}`} disabled={currentPage <= 1}>
+				{"<"}
+			</PaginationButton>
 			<p>{currentPage}</p>
-			{currentPage < lastPage ? (
-				<Link href={`/products/${currentPage + 1}`}>{">"}</Link>
-			) : (
-				<button disabled className="cursor-not-allowed opacity-60">
-					{">"}
-				</button>
-			)}
-			{currentPage == lastPage ? (
-				<button disabled className="cursor-not-allowed opacity-60">
-					{">>"}
-				</button>
-			) : (
-				<Link href={`/products/${lastPage}`}>{">>"}</Link>
-			)}
+			<PaginationButton url={`/products/${currentPage + 1}`} disabled={currentPage >= lastPage}>
+				{">"}
+			</PaginationButton>
+			<PaginationButton url={`/products/${lastPage}`} disabled={currentPage >= lastPage}>
+				{">>"}
+			</PaginationButton>
 		</div>
 	);
 };
