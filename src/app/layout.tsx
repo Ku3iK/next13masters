@@ -17,10 +17,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<nav>
 					<ul className="mt-2 flex justify-center space-x-4">
 						<li>
-							<ActiveLink href={"/"}>Homepage</ActiveLink>
+							<ActiveLink href={"/"} exact={true}>
+								Homepage
+							</ActiveLink>
 						</li>
 						<li>
-							<ActiveLink href={"/products"}>All</ActiveLink>
+							<ActiveLink href={"/products"} exact={false}>
+								All
+							</ActiveLink>
 						</li>
 					</ul>
 				</nav>
