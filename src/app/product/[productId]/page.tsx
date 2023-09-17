@@ -33,8 +33,10 @@ export default async function SingleProductPage({ params }: { params: { productI
 		<div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-12 gap-x-8 bg-white">
 			<main className="col-span-9 px-8 py-4 shadow-xl">
 				<article className="max-w-xs">
+					<h1>{product.name}</h1>
 					<ProductCoverImage image={{ src: product.coverImage.src, alt: product.coverImage.alt }} />
 					<ProductListItemDescription product={product} />
+					<p>{product.description}</p>
 				</article>
 			</main>
 			<aside className="col-span-3 px-8 py-4 shadow-xl">
