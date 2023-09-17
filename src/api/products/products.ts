@@ -1,8 +1,10 @@
 import { type ProductResponseItemTypes } from "@/api/products/productsTypes";
 import { type ProductListItemType } from "@/ui/molecules/ProductListItem/ProductListItemTypes";
 
+const productsEndPointInstance = `${process.env.API_BASE_URL}/products`;
+
 export const getProductsList = async () => {
-	const res = await fetch("https://naszsklep-api.vercel.app/api/products");
+	const res = await fetch(productsEndPointInstance);
 
 	const productsResponse = (await res.json()) as ProductResponseItemTypes[];
 
@@ -12,7 +14,7 @@ export const getProductsList = async () => {
 };
 
 export const getProductById = async (id: ProductListItemType["id"]) => {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${id}`);
+	const res = await fetch(`${productsEndPointInstance}/${id}`);
 
 	const productResponse = (await res.json()) as ProductResponseItemTypes;
 
@@ -20,11 +22,11 @@ export const getProductById = async (id: ProductListItemType["id"]) => {
 };
 
 export const getProductsByNumber = async (number: number, page?: number) => {
-	let baseUrl = `https://naszsklep-api.vercel.app/api/products?take=${number}`;
+	let baseUrl = `${productsEndPointInstance}?take=${number}`;
 
 	if (page !== undefined) {
 		const offset = number * (page - 1);
-		baseUrl = `https://naszsklep-api.vercel.app/api/products?offset=${offset}&take=${number}`;
+		baseUrl = `${productsEndPointInstance}?offset=${offset}&take=${number}`;
 	}
 
 	const res = await fetch(baseUrl);
@@ -37,7 +39,9 @@ export const getProductsByNumber = async (number: number, page?: number) => {
 };
 
 export const getNumberOfAllProducts = async () => {
-	const res = await fetch("https://naszsklep-api.vercel.app/api/products?take=-1");
+	const res = await fetch(`${productsEndPointInstance}?take=-1`, {
+		next: { revalidate: 1000 * 60 * 30 },
+	});
 
 	const productsResponse = (await res.json()) as ProductResponseItemTypes[];
 
