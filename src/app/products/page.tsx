@@ -7,8 +7,9 @@ export default async function ProductsPage() {
 
 	return (
 		<>
+			<h1>Produkty</h1>
 			<ProductList products={products} />
-			<div className="flex items-center justify-center">
+			<div aria-label="pagination" className="flex items-center justify-center">
 				<Link
 					href="/products/1"
 					className="mt-10 rounded-md border border-slate-200 px-4 transition-colors duration-300 ease-in-out hover:bg-slate-400 hover:text-white"

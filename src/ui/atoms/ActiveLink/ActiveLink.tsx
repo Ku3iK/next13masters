@@ -24,11 +24,11 @@ export const ActiveLink = ({
 		<Link
 			href={href}
 			className={clsx(
-				`text-blue-400 transition-colors duration-300 ease-in-out hover:text-blue-600 ${
+				`border-b-2 border-solid border-transparent text-blue-400 transition-colors duration-300 ease-in-out hover:text-blue-600 ${
 					isActive && activeClassName
 				} ${className && className}`,
 				{
-					underline: isActive,
+					"border-b-blue-600": isActive,
 				},
 			)}
 		>

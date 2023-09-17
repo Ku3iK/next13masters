@@ -14,7 +14,7 @@ export const ProductsPagination = ({
 	const lastPage = getMaxPages(numberOfProducts, perPage);
 
 	return (
-		<div className="mx-auto mt-8 flex items-center justify-center gap-4">
+		<div aria-label="pagination" className="mx-auto mt-8 flex items-center justify-center gap-4">
 			<PaginationButton url={"/products/1" as HrefType<string>} disabled={currentPage <= 1}>
 				{"<<"}
 			</PaginationButton>
