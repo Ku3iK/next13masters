@@ -9,6 +9,7 @@ export type ProductListItemType = {
 		width?: number;
 		height?: number;
 	};
+	description: string;
 };
 
 export type ProductListItemsProps = {
