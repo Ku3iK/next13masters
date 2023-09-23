@@ -3,7 +3,7 @@ export type ProductListItemType = {
 	name: string;
 	category: string;
 	price: number;
-	coverImage: {
+	coverImage?: {
 		src: string;
 		alt: string;
 		width?: number;

@@ -34,7 +34,11 @@ export default async function SingleProductPage({ params }: { params: { productI
 			<main className="col-span-9 px-8 py-4 shadow-xl">
 				<article className="max-w-xs">
 					<h1>{product.name}</h1>
-					<ProductCoverImage image={{ src: product.coverImage.src, alt: product.coverImage.alt }} />
+					{product.coverImage && (
+						<ProductCoverImage
+							image={{ src: product.coverImage.src, alt: product.coverImage.alt }}
+						/>
+					)}
 					<ProductListItemDescription product={product} />
 					<p>{product.description}</p>
 				</article>
