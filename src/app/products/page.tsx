@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { getProductsByNumber } from "@/api/products/products";
+import { productsGetList } from "@/api/products/products";
 import { ProductList } from "@/ui/organisms/ProductList/ProductList";
 
 export default async function ProductsPage() {
-	const products = await getProductsByNumber(20);
+	const products = await productsGetList();
 
 	return (
 		<>
