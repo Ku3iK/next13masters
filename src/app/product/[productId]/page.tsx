@@ -1,12 +1,13 @@
 import { Suspense } from "react";
 import { type Metadata } from "next/types";
-import { getProductById, getProductsList } from "@/api/products/products";
+import { notFound } from "next/navigation";
+import { productGetById, productsGetList } from "@/api/products/products";
 import { ProductListItemDescription } from "@/ui/atoms/ProductListItemDescription/ProductListItemDescription";
 import { ProductCoverImage } from "@/ui/atoms/ProductListItemImage/ProductListItemImage";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts/SuggestedProducts";
 
 export const generateStaticParams = async () => {
-	const products = await getProductsList();
+	const products = await productsGetList();
 
 	return products.map((product) => ({
 		productId: product.id,
@@ -18,7 +19,9 @@ export const generateMetadata = async ({
 }: {
 	params: { productId: string };
 }): Promise<Metadata> => {
-	const product = await getProductById(params.productId);
+	const product = await productGetById(params.productId);
+
+	if (!product) notFound();
 
 	return {
 		title: `${product.name} - Sklep internetowy`,
@@ -27,7 +30,9 @@ export const generateMetadata = async ({
 };
 
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
-	const product = await getProductById(params.productId);
+	const product = await productGetById(params.productId);
+
+	if (!product) notFound();
 
 	return (
 		<div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-12 gap-x-8 bg-white">
