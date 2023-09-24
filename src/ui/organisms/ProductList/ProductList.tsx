@@ -1,8 +1,14 @@
 import clsx from "clsx";
-import { type ProductsListType } from "./ProductListTypes";
 import { ProductListItem } from "@/ui/molecules/ProductListItem/ProductListItem";
+import { type ProductListItemFragment } from "@/gql/graphql";
 
-export const ProductList = ({ products, isListView = false }: ProductsListType) => {
+export const ProductList = ({
+	products,
+	isListView = false,
+}: {
+	products: ProductListItemFragment[];
+	isListView?: boolean;
+}) => {
 	return (
 		<ul
 			data-testid="products-list"

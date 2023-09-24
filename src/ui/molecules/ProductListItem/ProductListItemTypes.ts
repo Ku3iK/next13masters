@@ -3,13 +3,13 @@ export type ProductListItemType = {
 	name: string;
 	category: string;
 	price: number;
-	coverImage?: {
+	images: {
 		src: string;
 		alt: string;
 		width?: number;
 		height?: number;
-	};
-	description: string;
+	}[];
+	description?: string;
 };
 
 export type ProductListItemsProps = {
