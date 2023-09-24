@@ -1,84 +1,45 @@
 import { executeGraphql } from "../grapghqlApiInstance";
-import { type ProductResponseItemTypes } from "@/api/products/productsTypes";
 import {
 	ProductGetByIdDocument,
+	type ProductListItemFragment,
 	ProductsGetByCategorySlugDocument,
 	ProductsGetListDocument,
 } from "@/gql/graphql";
-import { type ProductListItemType } from "@/ui/molecules/ProductListItem/ProductListItemTypes";
 
 const productsEndPointInstance = `${process.env.API_BASE_URL}/products`;
 
-export const productsGetList = async (): Promise<ProductListItemType[]> => {
-	const graphqlResponse = await executeGraphql(ProductsGetListDocument, {});
+export const productsGetList = async () => {
+	const response = await executeGraphql(ProductsGetListDocument, {});
 
-	return graphqlResponse.products.map((product) => {
-		return {
-			id: product.id,
-			category: product.categories[0]?.name || "",
-			name: product.name,
-			price: product.price,
-			description: product.description,
-			coverImage: product.images[0] && {
-				src: product.images[0].url,
-				alt: product.name,
-			},
-		};
-	});
+	return response.products;
 };
 
 export const productsGetByCategorySlug = async (categorySlug: string) => {
-	const categories = await executeGraphql(ProductsGetByCategorySlugDocument, {
+	const response = await executeGraphql(ProductsGetByCategorySlugDocument, {
 		slug: categorySlug,
 	});
 
-	const products = categories.categories[0]?.products;
-
-	return products?.map((product) => {
-		return {
-			id: product.id,
-			category: product.categories[0]?.name || "",
-			name: product.name,
-			price: product.price,
-			description: product.description,
-			coverImage: product.images[0] && {
-				src: product.images[0].url,
-				alt: product.name,
-			},
-		};
-	});
+	return response.categories[0]?.products;
 };
 
 export const productGetById = async (productId: string) => {
-	const data = await executeGraphql(ProductGetByIdDocument, { id: productId });
+	const response = await executeGraphql(ProductGetByIdDocument, { id: productId });
 
-	const product = data.product;
-
-	if (product) {
-		return {
-			id: product.id,
-			category: product.categories[0]?.name || "",
-			name: product.name,
-			price: product.price,
-			description: product.description,
-			coverImage: product.images[0] && {
-				src: product.images[0].url,
-				alt: product.name,
-			},
-		};
-	}
+	return response.product;
 };
 
+// TODO: Use GraphQL instead of REST
 export const getProductsList = async () => {
 	const res = await fetch(productsEndPointInstance);
 
-	const productsResponse = (await res.json()) as ProductResponseItemTypes[];
+	const productsResponse = (await res.json()) as ProductListItemFragment[];
 
 	const products = productsResponse.map(productListItemTypeToProductListItemType);
 
 	return products;
 };
 
+// TODO: Use GraphQL instead of REST
 export const getProductsByNumber = async (number: number, page?: number) => {
 	let baseUrl = `${productsEndPointInstance}?take=${number}`;
 
@@ -89,7 +50,7 @@ export const getProductsByNumber = async (number: number, page?: number) => {
 
 	const res = await fetch(baseUrl);
 
-	const productsResponse = (await res.json()) as ProductResponseItemTypes[];
+	const productsResponse = (await res.json()) as ProductListItemFragment[];
 
 	const products = productsResponse.map(productListItemTypeToProductListItemType);
 
@@ -97,17 +58,17 @@ export const getProductsByNumber = async (number: number, page?: number) => {
 };
 
 const productListItemTypeToProductListItemType = (
-	product: ProductResponseItemTypes,
-): ProductListItemType => {
+	product: ProductListItemFragment,
+): ProductListItemFragment => {
 	return {
 		id: product.id,
-		name: product.title,
-		category: product.category,
+		name: product.name,
+		categories: product.categories,
 		price: product.price,
-		coverImage: {
-			src: product.image,
-			alt: product.title,
-		},
-		description: product.description,
+		images: [
+			{
+				url: product.images[0]?.url || "",
+			},
+		],
 	};
 };
