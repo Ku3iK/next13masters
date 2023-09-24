@@ -1,45 +1,36 @@
+import { executeGraphql } from "../grapghqlApiInstance";
 import { type ProductResponseItemTypes } from "@/api/products/productsTypes";
-import { ProductsGetListDocument, type TypedDocumentString } from "@/gql/graphql";
+import { ProductsGetByCategorySlugDocument, ProductsGetListDocument } from "@/gql/graphql";
 import { type ProductListItemType } from "@/ui/molecules/ProductListItem/ProductListItemTypes";
 
 const productsEndPointInstance = `${process.env.API_BASE_URL}/products`;
-
-const executeGraphql = async <TResult, TVariables>(
-	query: TypedDocumentString<TResult, TVariables>,
-	variables: TVariables,
-): Promise<TResult> => {
-	if (!process.env.GRAPHQL_URL) throw new Error("GRAPHQL_URL is not defined");
-
-	const res = await fetch(process.env.GRAPHQL_URL, {
-		method: "POST",
-		body: JSON.stringify({
-			query,
-			variables,
-		}),
-		headers: {
-			ContentType: "application/json",
-		},
-	});
-
-	type GraphQLResponse<T> =
-		| { data?: undefined; errors: { message: string[] } }
-		| { data: T; errors?: undefined };
-
-	const graphqlResponse = (await res.json()) as GraphQLResponse<TResult>;
-
-	if (graphqlResponse.errors) {
-		throw TypeError(`GraphQL Error`, {
-			cause: graphqlResponse.errors,
-		});
-	}
-
-	return graphqlResponse.data;
-};
 
 export const productsGetList = async (): Promise<ProductListItemType[]> => {
 	const graphqlResponse = await executeGraphql(ProductsGetListDocument, {});
 
 	return graphqlResponse.products.map((product) => {
+		return {
+			id: product.id,
+			category: product.categories[0]?.name || "",
+			name: product.name,
+			price: product.price,
+			description: product.description,
+			coverImage: product.images[0] && {
+				src: product.images[0].url,
+				alt: product.name,
+			},
+		};
+	});
+};
+
+export const productsGetByCategorySlug = async (categorySlug: string) => {
+	const categories = await executeGraphql(ProductsGetByCategorySlugDocument, {
+		slug: categorySlug,
+	});
+
+	const products = categories.categories[0]?.products;
+
+	return products?.map((product) => {
 		return {
 			id: product.id,
 			category: product.categories[0]?.name || "",
