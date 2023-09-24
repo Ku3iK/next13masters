@@ -96,16 +96,6 @@ export const getProductsByNumber = async (number: number, page?: number) => {
 	return products;
 };
 
-export const getNumberOfAllProducts = async () => {
-	const res = await fetch(`${productsEndPointInstance}?take=-1`, {
-		next: { revalidate: 1000 * 60 * 30 },
-	});
-
-	const productsResponse = (await res.json()) as ProductResponseItemTypes[];
-
-	return productsResponse.length;
-};
-
 const productListItemTypeToProductListItemType = (
 	product: ProductResponseItemTypes,
 ): ProductListItemType => {
