@@ -23,6 +23,7 @@ export const ActiveLink = ({
 	return (
 		<Link
 			href={href}
+			aria-current={isActive ? "page" : undefined}
 			className={clsx(
 				`border-b-2 border-solid border-transparent text-blue-400 transition-colors duration-300 ease-in-out hover:text-blue-600 ${
 					isActive && activeClassName
