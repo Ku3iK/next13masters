@@ -6,33 +6,48 @@ export const ProductsPagination = ({
 	currentPage = 1,
 	perPage = 10,
 	numberOfProducts,
+	customUrl,
 }: {
 	currentPage: number;
 	perPage?: number;
 	numberOfProducts: number;
+	customUrl?: string;
 }) => {
 	const lastPage = getMaxPages(numberOfProducts, perPage);
 
 	return (
 		<div aria-label="pagination" className="mx-auto mt-8 flex items-center justify-center gap-4">
-			<PaginationButton url={"/products/1" as HrefType<string>} disabled={currentPage <= 1}>
+			<PaginationButton
+				url={`${customUrl ? `${customUrl}/1` : `/products/1`}` as HrefType<string>}
+				disabled={currentPage <= 1}
+			>
 				{"<<"}
 			</PaginationButton>
 			<PaginationButton
-				url={`/products/${currentPage - 1}` as HrefType<string>}
+				url={
+					`${
+						customUrl ? `${customUrl}/${currentPage - 1}` : `/products/${currentPage - 1}`
+					}` as HrefType<string>
+				}
 				disabled={currentPage <= 1}
 			>
 				{"<"}
 			</PaginationButton>
 			<p>{currentPage}</p>
 			<PaginationButton
-				url={`/products/${currentPage + 1}` as HrefType<string>}
+				url={
+					`${
+						customUrl ? `${customUrl}/${currentPage + 1}` : `/products/${currentPage + 1}`
+					}` as HrefType<string>
+				}
 				disabled={currentPage >= lastPage}
 			>
 				{">"}
 			</PaginationButton>
 			<PaginationButton
-				url={`/products/${lastPage}` as HrefType<string>}
+				url={
+					`${customUrl ? `${customUrl}/${lastPage}` : `/products/${lastPage}`}` as HrefType<string>
+				}
 				disabled={currentPage >= lastPage}
 			>
 				{">>"}
