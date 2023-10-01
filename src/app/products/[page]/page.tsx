@@ -1,28 +1,23 @@
-import { getProductsByNumber } from "@/api/products/products";
+import { productsGetListByPage } from "@/api/products/products";
 import { ProductList } from "@/ui/organisms/ProductList/ProductList";
+import { redirect } from "next/navigation";
 
 export async function generateStaticParams() {
-	return [
-		{ page: "1" },
-		{ page: "2" },
-		{ page: "3" },
-		{ page: "4" },
-		{ page: "5" },
-		{ page: "6" },
-		{ page: "7" },
-		{ page: "8" },
-		{ page: "9" },
-		{ page: "10" },
-	];
+	return [{ page: "1" }, { page: "2" }];
 }
 
 export default async function ProductsPaginationPage({ params }: { params: { page: string } }) {
-	const pageNumber = parseInt(params.page, 10);
-	const products = await getProductsByNumber(20, pageNumber);
+	const products = await productsGetListByPage(10, params.page);
+
+	console.log(products);
+
+	if (!products.length) {
+		redirect("/products");
+	}
 
 	return (
 		<div>
-			<h1>Produkty strona {pageNumber}</h1>
+			<h1>Products page {params.page}</h1>
 			<ProductList products={products} />
 		</div>
 	);
