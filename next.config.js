@@ -5,6 +5,14 @@ const nextConfig = {
 		typedRoutes: true,
 		mdxRs: true,
 	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "media.graphassets.com",
+			},
+		],
+	},
 	redirects: async () => {
 		return [
 			{
