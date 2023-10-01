@@ -10736,10 +10736,23 @@ export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ProductsGetListQuery = { products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> };
 
+export type ProductsGetListWithPagesQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  skip?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ProductsGetListWithPagesQuery = { products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> };
+
 export type ProductsGetSuggestedByNewestQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ProductsGetSuggestedByNewestQuery = { products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> };
+
+export type ProductsGetTotalNumberQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductsGetTotalNumberQuery = { productsConnection: { aggregate: { count: number } } };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -10821,6 +10834,23 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
+export const ProductsGetListWithPagesDocument = new TypedDocumentString(`
+    query ProductsGetListWithPages($first: Int!, $skip: Int) {
+  products(first: $first, skip: $skip) {
+    ...ProductListItem
+  }
+}
+    fragment ProductListItem on Product {
+  id
+  name
+  categories(first: 1) {
+    name
+  }
+  images(first: 1) {
+    url
+  }
+  price
+}`) as unknown as TypedDocumentString<ProductsGetListWithPagesQuery, ProductsGetListWithPagesQueryVariables>;
 export const ProductsGetSuggestedByNewestDocument = new TypedDocumentString(`
     query ProductsGetSuggestedByNewest {
   products(first: 5) {
@@ -10838,3 +10868,12 @@ export const ProductsGetSuggestedByNewestDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetSuggestedByNewestQuery, ProductsGetSuggestedByNewestQueryVariables>;
+export const ProductsGetTotalNumberDocument = new TypedDocumentString(`
+    query ProductsGetTotalNumber {
+  productsConnection {
+    aggregate {
+      count
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ProductsGetTotalNumberQuery, ProductsGetTotalNumberQueryVariables>;
