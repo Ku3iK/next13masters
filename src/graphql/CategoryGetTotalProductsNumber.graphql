@@ -1,0 +1,7 @@
+query CategoryGetTotalProductsNumber {
+	productsConnection(where: { categories_every: { slug: "hoodies" } }) {
+		aggregate {
+			count
+		}
+	}
+}
