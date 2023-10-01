@@ -8,8 +8,6 @@ import {
 	ProductsGetTotalNumberDocument,
 } from "@/gql/graphql";
 
-// const productsEndPointInstance = `${process.env.API_BASE_URL}/products`;
-
 export const productsGetList = async () => {
 	const response = await executeGraphql(ProductsGetListDocument, {});
 
