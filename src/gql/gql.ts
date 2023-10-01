@@ -18,6 +18,7 @@ const documents = {
     "fragment ProductListItem on Product {\n  id\n  name\n  categories(first: 1) {\n    name\n  }\n  images(first: 1) {\n    url\n  }\n  price\n}": types.ProductListItemFragmentDoc,
     "query ProductsGetByCategorySlug($slug: String!) {\n  categories(where: {slug: $slug}) {\n    name\n    products(first: 10) {\n      ...ProductListItem\n    }\n  }\n}": types.ProductsGetByCategorySlugDocument,
     "query ProductsGetList {\n  products(first: 10) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListDocument,
+    "query ProductsGetSuggestedByNewest {\n  products(first: 5) {\n    ...ProductListItem\n  }\n}": types.ProductsGetSuggestedByNewestDocument,
 };
 
 /**
@@ -36,6 +37,10 @@ export function graphql(source: "query ProductsGetByCategorySlug($slug: String!)
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query ProductsGetList {\n  products(first: 10) {\n    ...ProductListItem\n  }\n}"): typeof import('./graphql').ProductsGetListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query ProductsGetSuggestedByNewest {\n  products(first: 5) {\n    ...ProductListItem\n  }\n}"): typeof import('./graphql').ProductsGetSuggestedByNewestDocument;
 
 
 export function graphql(source: string) {
