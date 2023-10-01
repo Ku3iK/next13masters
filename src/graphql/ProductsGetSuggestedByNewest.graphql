@@ -1,0 +1,5 @@
+query ProductsGetSuggestedByNewest {
+	products(first: 5) {
+		...ProductListItem
+	}
+}

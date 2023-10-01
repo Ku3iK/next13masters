@@ -4,7 +4,7 @@ import { type HrefType } from "@/ui/atoms/ActiveLink/ActiveLinkTypes";
 
 export const ProductsPagination = ({
 	currentPage = 1,
-	perPage = 20,
+	perPage = 10,
 	numberOfProducts,
 }: {
 	currentPage: number;

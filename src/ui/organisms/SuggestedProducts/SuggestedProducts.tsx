@@ -1,15 +1,13 @@
 import { ProductList } from "../ProductList/ProductList";
-import { getProductsList } from "@/api/products/products";
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import { productsGetSuggestedByNewest } from "@/api/products/products";
 
 export const SuggestedProducts = async ({ isListView }: { isListView: boolean }) => {
-	const products = await getProductsList();
-	await sleep(5000);
+	const products = await productsGetSuggestedByNewest();
+
 	return (
-		<>
-			<h2 className="mb-4 text-2xl font-bold">Polecane produkty</h2>
-			<ProductList products={products.slice(-4)} isListView={isListView} />
-		</>
+		<div data-testid="related-products" className="sticky top-4">
+			<h2 className="mb-4 text-2xl font-bold">Nasze najnowsze produkty</h2>
+			<ProductList products={products} isListView={isListView} />
+		</div>
 	);
 };

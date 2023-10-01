@@ -2,9 +2,10 @@ import { Suspense } from "react";
 import { type Metadata } from "next/types";
 import { notFound } from "next/navigation";
 import { productGetById, productsGetList } from "@/api/products/products";
-import { ProductListItemDescription } from "@/ui/atoms/ProductListItemDescription/ProductListItemDescription";
-import { ProductCoverImage } from "@/ui/atoms/ProductListItemImage/ProductListItemImage";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts/SuggestedProducts";
+import { ProductImage } from "@/ui/atoms/ProductImage/ProductImage";
+import { formatMoney } from "@/utils/formatMoney";
+import { StockStatus } from "@/ui/atoms/StockStatus/StockStatus";
 
 export const generateStaticParams = async () => {
 	const products = await productsGetList();
@@ -37,13 +38,28 @@ export default async function SingleProductPage({ params }: { params: { productI
 	return (
 		<div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-12 gap-x-8 bg-white">
 			<main className="col-span-9 px-8 py-4 shadow-xl">
-				<article className="max-w-xs">
-					<h1>{product.name}</h1>
+				<article className="flex w-full flex-col gap-12 md:flex-row">
 					{product.images[0] && (
-						<ProductCoverImage image={{ src: product.images[0].url, alt: product.name }} />
+						<ProductImage image={{ src: product.images[0].url, alt: product.name }} />
 					)}
-					<ProductListItemDescription product={product} />
-					<p>{product.description}</p>
+					<div>
+						<h1 className="mb-10 font-bold">{product.name}</h1>
+						<p className="mb-6">{product.description}</p>
+						{product.categories[0] && (
+							<p className="mb-6">
+								Category: <span className="font-medium">{product.categories[0].name}</span>
+							</p>
+						)}
+						<p className="mb-4 text-sm font-medium text-gray-900">
+							Price: {formatMoney(product.price / 100)}
+						</p>
+
+						<StockStatus isAvailable={true} />
+
+						<button className="mt-4 rounded-sm border bg-slate-200 px-6 py-2 shadow-sm transition-colors hover:bg-slate-400">
+							Add to cart
+						</button>
+					</div>
 				</article>
 			</main>
 			<aside className="col-span-3 px-8 py-4 shadow-xl">

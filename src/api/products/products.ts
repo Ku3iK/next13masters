@@ -1,12 +1,12 @@
 import { executeGraphql } from "../grapghqlApiInstance";
 import {
 	ProductGetByIdDocument,
-	type ProductListItemFragment,
 	ProductsGetByCategorySlugDocument,
 	ProductsGetListDocument,
+	ProductsGetSuggestedByNewestDocument,
+	ProductsGetListWithPagesDocument,
+	ProductsGetTotalNumberDocument,
 } from "@/gql/graphql";
-
-const productsEndPointInstance = `${process.env.API_BASE_URL}/products`;
 
 export const productsGetList = async () => {
 	const response = await executeGraphql(ProductsGetListDocument, {});
@@ -28,47 +28,25 @@ export const productGetById = async (productId: string) => {
 	return response.product;
 };
 
-// TODO: Use GraphQL instead of REST
-export const getProductsList = async () => {
-	const res = await fetch(productsEndPointInstance);
+export const productsGetSuggestedByNewest = async () => {
+	const response = await executeGraphql(ProductsGetSuggestedByNewestDocument, {});
 
-	const productsResponse = (await res.json()) as ProductListItemFragment[];
-
-	const products = productsResponse.map(productListItemTypeToProductListItemType);
-
-	return products;
+	return response.products;
 };
 
-// TODO: Use GraphQL instead of REST
-export const getProductsByNumber = async (number: number, page?: number) => {
-	let baseUrl = `${productsEndPointInstance}?take=${number}`;
+export const productsGetTotalNumber = async () => {
+	const response = await executeGraphql(ProductsGetTotalNumberDocument, {});
 
-	if (page !== undefined) {
-		const offset = number * (page - 1);
-		baseUrl = `${productsEndPointInstance}?offset=${offset}&take=${number}`;
-	}
-
-	const res = await fetch(baseUrl);
-
-	const productsResponse = (await res.json()) as ProductListItemFragment[];
-
-	const products = productsResponse.map(productListItemTypeToProductListItemType);
-
-	return products;
+	return response.productsConnection.aggregate.count;
 };
 
-const productListItemTypeToProductListItemType = (
-	product: ProductListItemFragment,
-): ProductListItemFragment => {
-	return {
-		id: product.id,
-		name: product.name,
-		categories: product.categories,
-		price: product.price,
-		images: [
-			{
-				url: product.images[0]?.url || "",
-			},
-		],
-	};
+export const productsGetListByPage = async (perPage: number = 10, currentPageNumber: string) => {
+	const skip = (Number(currentPageNumber) - 1) * 10;
+
+	const response = await executeGraphql(ProductsGetListWithPagesDocument, {
+		first: perPage,
+		skip: skip,
+	});
+
+	return response.products;
 };
