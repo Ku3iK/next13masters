@@ -6,7 +6,7 @@ import { Navbar } from "@/ui/organisms/Navbar/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Next13Masters",
+	title: "Accessories",
 	description: "Next13Masters - kurs",
 };
 
