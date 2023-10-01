@@ -4,6 +4,7 @@ import {
 	type ProductListItemFragment,
 	ProductsGetByCategorySlugDocument,
 	ProductsGetListDocument,
+	ProductsGetSuggestedByNewestDocument,
 } from "@/gql/graphql";
 
 const productsEndPointInstance = `${process.env.API_BASE_URL}/products`;
@@ -28,15 +29,10 @@ export const productGetById = async (productId: string) => {
 	return response.product;
 };
 
-// TODO: Use GraphQL instead of REST
-export const getProductsList = async () => {
-	const res = await fetch(productsEndPointInstance);
+export const productsGetSuggestedByNewest = async () => {
+	const response = await executeGraphql(ProductsGetSuggestedByNewestDocument, {});
 
-	const productsResponse = (await res.json()) as ProductListItemFragment[];
-
-	const products = productsResponse.map(productListItemTypeToProductListItemType);
-
-	return products;
+	return response.products;
 };
 
 // TODO: Use GraphQL instead of REST
