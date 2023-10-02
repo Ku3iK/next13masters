@@ -7,6 +7,7 @@ import {
 	ProductsGetListWithPagesDocument,
 	ProductsGetTotalNumberDocument,
 	ProductsGetByCategorySlugPerPageDocument,
+	ProductsGetByCollectionSlugDocument,
 } from "@/gql/graphql";
 
 export const productsGetList = async () => {
@@ -57,7 +58,7 @@ export const productsGetByCategorySlugPerPage = async (
 	perPage: number = 10,
 	currentPageNumber: string,
 ) => {
-	const skip = (Number(currentPageNumber) - 1) * 10;
+	const skip = (Number(currentPageNumber) - 1) * 2;
 
 	const response = await executeGraphql(ProductsGetByCategorySlugPerPageDocument, {
 		categorySlug: categorySlug,
@@ -66,4 +67,15 @@ export const productsGetByCategorySlugPerPage = async (
 	});
 
 	return response.categories[0]?.products;
+};
+
+export const productsGetByCollectionSlug = async (collectionSlug: string) => {
+	const response = await executeGraphql(ProductsGetByCollectionSlugDocument, {
+		slug: collectionSlug,
+	});
+
+	return {
+		collectionName: response.collections[0]?.name,
+		products: response.collections[0]?.products,
+	};
 };
