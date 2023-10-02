@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { productsGetByCategorySlug } from "@/api/products/products";
+import { productsGetByCategorySlugPerPage } from "@/api/products/products";
 import { ProductList } from "@/ui/organisms/ProductList/ProductList";
 
 export const generateStaticParams = async ({ params }: { params: { category: string } }) => {
@@ -15,15 +15,13 @@ export default async function CategoryProductPage({
 }: {
 	params: { category: string; pageNumber: string };
 }) {
-	const products = await productsGetByCategorySlug(params.category);
+	const products = await productsGetByCategorySlugPerPage(params.category, 2, params.pageNumber);
 
 	if (!products) throw notFound();
 
 	return (
 		<>
-			<h1>
-				Produkty z kategorii {params.category}, strona {params.pageNumber}
-			</h1>
+			<h1>Accessories page {params.pageNumber}</h1>
 			<ProductList products={products} />
 		</>
 	);
