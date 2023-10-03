@@ -29,7 +29,6 @@ export async function executeGraphql<TResult, TVariables>({
 		headers: {
 			...headers,
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
 		},
 	});
 

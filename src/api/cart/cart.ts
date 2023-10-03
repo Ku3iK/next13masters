@@ -15,6 +15,9 @@ export async function getCartById(cartId: string) {
 	return executeGraphql({
 		query: CartGetByIdDocument,
 		variables: { id: cartId },
+		headers: {
+			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
+		},
 		cache: "no-store",
 	});
 }
@@ -23,7 +26,15 @@ export async function getCartFromCookies() {
 	const cartId = cookies().get("cartId")?.value;
 
 	if (cartId) {
-		const cart = await getCartById(cartId);
+		const cart = await executeGraphql({
+			query: CartGetByIdDocument,
+			variables: {
+				id: cartId,
+			},
+			headers: {
+				Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
+			},
+		});
 
 		if (cart.order) {
 			return cart.order;
@@ -56,6 +67,9 @@ export async function addProductToCart(cartId: string, productId: string) {
 	const product = await executeGraphql({
 		query: ProductGetByIdDocument,
 		variables: { id: productId },
+		headers: {
+			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
+		},
 	});
 
 	if (!product.product) {
@@ -65,5 +79,8 @@ export async function addProductToCart(cartId: string, productId: string) {
 	await executeGraphql({
 		query: CartAddItemDocument,
 		variables: { cartId, productId, total: product.product.price },
+		headers: {
+			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
+		},
 	});
 }
