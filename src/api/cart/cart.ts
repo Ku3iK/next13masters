@@ -12,7 +12,11 @@ async function createCart() {
 }
 
 export async function getCartById(cartId: string) {
-	return executeGraphql({ query: CartGetByIdDocument, variables: { id: cartId } });
+	return executeGraphql({
+		query: CartGetByIdDocument,
+		variables: { id: cartId },
+		cache: "no-store",
+	});
 }
 
 export async function getCartFromCookies() {
@@ -39,6 +43,11 @@ export async function getOrCreateCart() {
 	if (!cart.createOrder?.id) {
 		throw new Error("Cart not created");
 	}
+
+	cookies().set("cartId", cart.createOrder.id, {
+		httpOnly: true,
+		sameSite: "lax",
+	});
 
 	return cart.createOrder;
 }

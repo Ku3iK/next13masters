@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { type Metadata } from "next/types";
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
 import { productGetById, productsGetList } from "@/api/products/products";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts/SuggestedProducts";
 import { ProductImage } from "@/ui/atoms/ProductImage/ProductImage";
@@ -12,7 +11,7 @@ import { addProductToCart, getOrCreateCart } from "@/api/cart/cart";
 export const generateStaticParams = async () => {
 	const products = await productsGetList();
 
-	return products.map((product) => ({
+	return products.slice(0, 5).map((product) => ({
 		productId: product.id,
 	}));
 };
@@ -41,12 +40,6 @@ export default async function SingleProductPage({ params }: { params: { productI
 		"use server";
 
 		const cart = await getOrCreateCart();
-
-		cookies().set("cartId", cart.id, {
-			httpOnly: true,
-			sameSite: "lax",
-			secure: true,
-		});
 
 		await addProductToCart(cart.id, params.productId);
 	}
