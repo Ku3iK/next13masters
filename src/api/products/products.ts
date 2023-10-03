@@ -8,6 +8,7 @@ import {
 	ProductsGetTotalNumberDocument,
 	ProductsGetByCategorySlugPerPageDocument,
 	ProductsGetByCollectionSlugDocument,
+	ProductsGetByNameDocument,
 } from "@/gql/graphql";
 
 export const productsGetList = async () => {
@@ -78,4 +79,12 @@ export const productsGetByCollectionSlug = async (collectionSlug: string) => {
 		collectionName: response.collections[0]?.name,
 		products: response.collections[0]?.products,
 	};
+};
+
+export const productsGetByName = async (nameFragment: string) => {
+	const response = await executeGraphql(ProductsGetByNameDocument, {
+		nameFragment: nameFragment,
+	});
+
+	return response.products;
 };
