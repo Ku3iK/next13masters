@@ -1,11 +1,13 @@
 import { Suspense } from "react";
 import { type Metadata } from "next/types";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { productGetById, productsGetList } from "@/api/products/products";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts/SuggestedProducts";
 import { ProductImage } from "@/ui/atoms/ProductImage/ProductImage";
 import { formatMoney } from "@/utils/formatMoney";
 import { StockStatus } from "@/ui/atoms/StockStatus/StockStatus";
+import { addProductToCart, getOrCreateCart } from "@/api/cart/cart";
 
 export const generateStaticParams = async () => {
 	const products = await productsGetList();
@@ -35,6 +37,20 @@ export default async function SingleProductPage({ params }: { params: { productI
 
 	if (!product) notFound();
 
+	async function addProductToCartAction(_formData: FormData) {
+		"use server";
+
+		const cart = await getOrCreateCart();
+
+		cookies().set("cartId", cart.id, {
+			httpOnly: true,
+			sameSite: "lax",
+			secure: true,
+		});
+
+		await addProductToCart(cart.id, params.productId);
+	}
+
 	return (
 		<div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-12 gap-x-8 bg-white">
 			<main className="col-span-9 px-8 py-4 shadow-xl">
@@ -56,9 +72,14 @@ export default async function SingleProductPage({ params }: { params: { productI
 
 						<StockStatus isAvailable={true} />
 
-						<button className="mt-4 rounded-sm border bg-slate-200 px-6 py-2 shadow-sm transition-colors hover:bg-slate-400">
-							Add to cart
-						</button>
+						<form action={addProductToCartAction}>
+							<button
+								type="submit"
+								className="mt-4 rounded-sm border bg-slate-200 px-6 py-2 shadow-sm transition-colors hover:bg-slate-400"
+							>
+								Add to cart
+							</button>
+						</form>
 					</div>
 				</article>
 			</main>
