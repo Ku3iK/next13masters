@@ -10764,6 +10764,13 @@ export type ProductsGetByCollectionSlugQueryVariables = Exact<{
 
 export type ProductsGetByCollectionSlugQuery = { collections: Array<{ name: string, products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> }> };
 
+export type ProductsGetByNameQueryVariables = Exact<{
+  nameFragment: Scalars['String']['input'];
+}>;
+
+
+export type ProductsGetByNameQuery = { products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> };
+
 export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -10931,6 +10938,23 @@ export const ProductsGetByCollectionSlugDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetByCollectionSlugQuery, ProductsGetByCollectionSlugQueryVariables>;
+export const ProductsGetByNameDocument = new TypedDocumentString(`
+    query ProductsGetByName($nameFragment: String!) {
+  products(where: {name_contains: $nameFragment}) {
+    ...ProductListItem
+  }
+}
+    fragment ProductListItem on Product {
+  id
+  name
+  categories(first: 1) {
+    name
+  }
+  images(first: 1) {
+    url
+  }
+  price
+}`) as unknown as TypedDocumentString<ProductsGetByNameQuery, ProductsGetByNameQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList {
   products(first: 10) {

@@ -23,6 +23,7 @@ const documents = {
     "query ProductsGetByCategorySlug($slug: String!) {\n  categories(where: {slug: $slug}) {\n    name\n    products(first: 10) {\n      ...ProductListItem\n    }\n  }\n}": types.ProductsGetByCategorySlugDocument,
     "query ProductsGetByCategorySlugPerPage($categorySlug: String!, $first: Int!, $skip: Int) {\n  categories(where: {slug: $categorySlug}) {\n    name\n    products(first: $first, skip: $skip) {\n      ...ProductListItem\n    }\n  }\n}": types.ProductsGetByCategorySlugPerPageDocument,
     "query ProductsGetByCollectionSlug($slug: String!) {\n  collections(where: {slug: $slug}) {\n    name\n    products(first: 10) {\n      ...ProductListItem\n    }\n  }\n}": types.ProductsGetByCollectionSlugDocument,
+    "query ProductsGetByName($nameFragment: String!) {\n  products(where: {name_contains: $nameFragment}) {\n    ...ProductListItem\n  }\n}": types.ProductsGetByNameDocument,
     "query ProductsGetList {\n  products(first: 10) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListDocument,
     "query ProductsGetListWithPages($first: Int!, $skip: Int) {\n  products(first: $first, skip: $skip) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListWithPagesDocument,
     "query ProductsGetSuggestedByNewest {\n  products(first: 5) {\n    ...ProductListItem\n  }\n}": types.ProductsGetSuggestedByNewestDocument,
@@ -65,6 +66,10 @@ export function graphql(source: "query ProductsGetByCategorySlugPerPage($categor
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query ProductsGetByCollectionSlug($slug: String!) {\n  collections(where: {slug: $slug}) {\n    name\n    products(first: 10) {\n      ...ProductListItem\n    }\n  }\n}"): typeof import('./graphql').ProductsGetByCollectionSlugDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query ProductsGetByName($nameFragment: String!) {\n  products(where: {name_contains: $nameFragment}) {\n    ...ProductListItem\n  }\n}"): typeof import('./graphql').ProductsGetByNameDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
