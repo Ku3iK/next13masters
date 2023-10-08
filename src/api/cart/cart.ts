@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { executeGraphql } from "../grapghqlApiInstance";
+import { changeItemQuantity } from "./actions";
 import {
 	CartGetByIdDocument,
 	CartCreateDocument,
@@ -18,7 +19,6 @@ export async function getCartById(cartId: string) {
 		headers: {
 			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
 		},
-		cache: "no-store",
 	});
 }
 
@@ -34,12 +34,17 @@ export async function getCartFromCookies() {
 			headers: {
 				Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
 			},
+			next: {
+				tags: ["cart"],
+			},
 		});
 
 		if (cart.order) {
 			return cart.order;
 		}
 	}
+
+	return null;
 }
 
 export async function getOrCreateCart() {
@@ -76,11 +81,18 @@ export async function addProductToCart(cartId: string, productId: string) {
 		throw new Error("Product not found");
 	}
 
-	await executeGraphql({
-		query: CartAddItemDocument,
-		variables: { cartId, productId, total: product.product.price },
-		headers: {
-			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
-		},
-	});
+	const cart = await getCartById(cartId);
+	const existingItem = cart.order?.orderItems.find((item) => item.product?.id === productId);
+
+	if (existingItem) {
+		await changeItemQuantity(existingItem.id, existingItem.quantity + 1);
+	} else {
+		await executeGraphql({
+			query: CartAddItemDocument,
+			variables: { cartId, productId, total: product.product.price },
+			headers: {
+				Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
+			},
+		});
+	}
 }

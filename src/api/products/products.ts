@@ -1,3 +1,5 @@
+"use server";
+
 import { executeGraphql } from "../grapghqlApiInstance";
 import {
 	ProductGetByIdDocument,
@@ -9,6 +11,8 @@ import {
 	ProductsGetByCategorySlugPerPageDocument,
 	ProductsGetByCollectionSlugDocument,
 	ProductsGetByNameDocument,
+	ProductAddReviewDocument,
+	ProductReviewPublishByIdDocument,
 } from "@/gql/graphql";
 
 export const productsGetList = async () => {
@@ -107,4 +111,42 @@ export const productsGetByName = async (nameFragment: string) => {
 	});
 
 	return response.products;
+};
+
+export const productAddReview = async (
+	headline: string,
+	name: string,
+	email: string,
+	content: string,
+	rating: number,
+	productId: string,
+) => {
+	const response = await executeGraphql({
+		query: ProductAddReviewDocument,
+		variables: {
+			headline: headline,
+			name: name,
+			email: email,
+			content: content,
+			rating: rating,
+			productId: productId,
+		},
+		headers: {
+			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
+		},
+	});
+
+	return response.createReview?.id;
+};
+
+export const publishProductReviewById = async (reviewId: string) => {
+	const response = await executeGraphql({
+		query: ProductReviewPublishByIdDocument,
+		variables: { reviewId },
+		headers: {
+			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
+		},
+	});
+
+	return response.publishReview?.id;
 };

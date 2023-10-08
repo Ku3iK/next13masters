@@ -1,5 +1,5 @@
 query ProductsGetSuggestedByNewest {
-	products(first: 5) {
+	products(first: 4) {
 		...ProductListItem
 	}
 }
