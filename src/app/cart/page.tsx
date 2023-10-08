@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getCartFromCookies } from "@/api/cart/cart";
 import { formatMoney } from "@/utils/formatMoney";
-import { IncrementProductQuantity } from "@/ui/molecules/IncrementProductQuantity/IncrementProductQuantity";
+import { ChangeProductQuantity } from "@/ui/molecules/ChangeProductQuantity/ChangeProductQuantity";
 import { RemoveButton } from "@/ui/atoms/RemoveButton/RemoveButton";
 
 export default async function CartPage() {
@@ -43,7 +43,7 @@ export default async function CartPage() {
 								<tr key={item.product.id}>
 									<td>{item.product.name}</td>
 									<td className="text-center">
-										<IncrementProductQuantity itemId={item.id} quantity={item.quantity} />
+										<ChangeProductQuantity itemId={item.id} quantity={item.quantity} />
 									</td>
 									<td>{formatMoney(item.product.price / 100)}</td>
 									<td>
