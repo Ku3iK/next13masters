@@ -14,6 +14,7 @@ import {
 	ProductAddReviewDocument,
 	ProductReviewPublishByIdDocument,
 	type ProductOrderByInput,
+	ProductsGetListWithRatesDocument,
 } from "@/gql/graphql";
 
 export const productsGetList = async () => {
@@ -155,4 +156,12 @@ export const publishProductReviewById = async (reviewId: string) => {
 	});
 
 	return response.publishReview?.id;
+};
+
+export const productsGetListWithRates = async () => {
+	const response = await executeGraphql({
+		query: ProductsGetListWithRatesDocument,
+	});
+
+	return response.products;
 };

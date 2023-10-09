@@ -1,0 +1,5 @@
+query ProductsGetListWithRates {
+	products(first: 10) {
+		...ProductListItem
+	}
+}
