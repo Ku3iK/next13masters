@@ -11,6 +11,7 @@ export const ActiveLink = ({
 	activeClassName,
 	exact,
 	children,
+	...props
 }: ActiveLinkType) => {
 	const pathname = usePathname();
 	const matchedPath = (typeof href === "string" ? href : href.pathname) ?? null;
@@ -22,6 +23,7 @@ export const ActiveLink = ({
 
 	return (
 		<Link
+			{...props}
 			href={href}
 			aria-current={isActive ? "page" : undefined}
 			className={clsx(
