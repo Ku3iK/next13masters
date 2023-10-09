@@ -1,12 +1,12 @@
 import clsx from "clsx";
 import { ProductListItem } from "@/ui/molecules/ProductListItem/ProductListItem";
-import { type ProductListItemFragment } from "@/gql/graphql";
+import { type ProductWithAverageRating } from "@/utils/addAverageRatingToProducts";
 
 export const ProductList = ({
 	products,
 	isListView = false,
 }: {
-	products: ProductListItemFragment[];
+	products: ProductWithAverageRating[];
 	isListView?: boolean;
 }) => {
 	return (
