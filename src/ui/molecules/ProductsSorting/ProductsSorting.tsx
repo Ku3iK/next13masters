@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { type ChangeEvent, useState, useEffect } from "react";
 
 type SortOption = {
@@ -13,7 +13,7 @@ const sortingOptions: SortOption[] = [
 	{ value: "createdAt_ASC", label: "Domyślne sortowanie" },
 	{ value: "price_ASC", label: "Cena od najniższej", testId: "sort-by-price" },
 	{ value: "price_DESC", label: "Cena od najwyższej" },
-	{ value: "rating", label: "Oceny od najwyższych", testId: "sort-by-rating" },
+	{ value: "rating", label: "Ranking", testId: "sort-by-rating" },
 ];
 
 export const ProductsSorting = () => {
@@ -28,7 +28,13 @@ export const ProductsSorting = () => {
 	};
 
 	useEffect(() => {
-		router.push(`?sortBy=${selectedSort}`);
+		if (selectedSort !== "") {
+			if (selectedSort === "rating") {
+				redirect("/products/ranking");
+			} else {
+				router.push(`?sortBy=${selectedSort}`);
+			}
+		}
 	}, [selectedSort, router]);
 
 	return (
