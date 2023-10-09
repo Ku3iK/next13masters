@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { productsGetList } from "@/api/products/products";
 import { ProductList } from "@/ui/organisms/ProductList/ProductList";
+import { ProductsSorting } from "@/ui/molecules/ProductsSorting/ProductsSorting";
 
 export default async function ProductsPage() {
 	const products = await productsGetList();
@@ -8,6 +9,7 @@ export default async function ProductsPage() {
 	return (
 		<>
 			<h1>Produkty</h1>
+			<ProductsSorting />
 			<ProductList products={products} />
 			<div aria-label="pagination" className="flex items-center justify-center">
 				<Link
