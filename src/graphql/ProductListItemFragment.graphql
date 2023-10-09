@@ -8,4 +8,7 @@ fragment ProductListItem on Product {
 		url
 	}
 	price
+	reviews {
+		rating
+	}
 }

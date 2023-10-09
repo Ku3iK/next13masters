@@ -13,6 +13,8 @@ import {
 	ProductsGetByNameDocument,
 	ProductAddReviewDocument,
 	ProductReviewPublishByIdDocument,
+	type ProductOrderByInput,
+	ProductsGetListWithRatesDocument,
 } from "@/gql/graphql";
 
 export const productsGetList = async () => {
@@ -55,7 +57,11 @@ export const productsGetTotalNumber = async () => {
 	return response.productsConnection.aggregate.count;
 };
 
-export const productsGetListByPage = async (perPage: number = 10, currentPageNumber: string) => {
+export const productsGetListByPage = async (
+	perPage: number = 10,
+	currentPageNumber: string,
+	orderBy: ProductOrderByInput = "publishedAt_ASC",
+) => {
 	const skip = (Number(currentPageNumber) - 1) * 10;
 
 	const response = await executeGraphql({
@@ -63,6 +69,7 @@ export const productsGetListByPage = async (perPage: number = 10, currentPageNum
 		variables: {
 			first: perPage,
 			skip: skip,
+			orderBy: orderBy,
 		},
 	});
 
@@ -149,4 +156,12 @@ export const publishProductReviewById = async (reviewId: string) => {
 	});
 
 	return response.publishReview?.id;
+};
+
+export const productsGetListWithRates = async () => {
+	const response = await executeGraphql({
+		query: ProductsGetListWithRatesDocument,
+	});
+
+	return response.products;
 };
