@@ -22,4 +22,5 @@ pnpm dev
 
 ```
 GRAPHQL_URL= // GraphQL server URL
+HYGRAPH_MUTATION_TOKEN= // Token to add access for mutation endpoint
 ```
