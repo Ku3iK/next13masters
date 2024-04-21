@@ -13,12 +13,14 @@ pnpm dev
 
 - [Next.js](https://nextjs.org/docs)
 - [TypeScript](https://www.typescriptlang.org/)
-- [GraphQL]([https://nextjs.org/docs](https://graphql.org/))
-- [GraphQl CodeGen]([https://nextjs.org/docs](https://github.com/dotansimha/graphql-code-generator#readme))
-- [Tailwind]([https://nextjs.org/docs](https://tailwindcss.com/))
+- [GraphQL](https://graphql.org/)
+- [GraphQl CodeGen](https://github.com/dotansimha/graphql-code-generator#readme)
+- [Tailwind](https://tailwindcss.com/)
 - [Hygraph](https://hygraph.com/)
 
 ## ENV
+
+copy `.env.sample` and `.env.local.sample` files and add values to the `ENV variables` already created in them.
 
 ```
 GRAPHQL_URL= // GraphQL server URL
