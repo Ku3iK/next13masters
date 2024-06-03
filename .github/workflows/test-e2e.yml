@@ -31,8 +31,8 @@ jobs:
         run: pnpm exec playwright test
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
-          GRAPHQL_URL: ${{ GRAPHQL_URL }}
-          HYGRAPH_MUTATION_TOKEN: ${{ HYGRAPH_MUTATION_TOKEN }}
+          GRAPHQL_URL: ${{ secrets.GRAPHQL_URL }}
+          HYGRAPH_MUTATION_TOKEN: ${{ secrets.HYGRAPH_MUTATION_TOKEN }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
