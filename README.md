@@ -17,6 +17,8 @@ pnpm dev
 - [GraphQl CodeGen](https://github.com/dotansimha/graphql-code-generator#readme)
 - [Tailwind](https://tailwindcss.com/)
 - [Hygraph](https://hygraph.com/)
+- [Playwright](https://playwright.dev/)
+- [Jest](https://jestjs.io/)
 
 ## ENV
 
