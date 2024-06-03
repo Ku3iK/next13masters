@@ -25,4 +25,4 @@ jobs:
         run: |
           pnpm run prettier
           pnpm run lint
-          pnpm run test
+          pnpm run test:unit
