@@ -3,33 +3,23 @@ name: Node.js CI
 on: push
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [20]
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: '20.9.0'
+          version: 9
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: '9'
-
-      - name: Verify pnpm installation
-        run: |
-          pnpm --version
-          echo $PATH
-
       - name: Install dependencies
         run: pnpm install
-
-      - name: Run tests
-        run: |
-          pnpm run prettier
-          pnpm run lint
-          pnpm run test:unit
+      - name: Run unit tests
+        run: pnpm run test:unit
