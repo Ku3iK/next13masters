@@ -18,19 +18,14 @@ jobs:
       - name: Install pnpm
         run: |
           curl -fsSL https://get.pnpm.io/install.sh | sh -
-          export PNPM_HOME="$HOME/.local/share/pnpm"
-          export PATH="$PNPM_HOME:$PATH"
+          echo "export PNPM_HOME=\"$HOME/.local/share/pnpm\"" >> $GITHUB_ENV
+          echo "export PATH=\"$PNPM_HOME:$PATH\"" >> $GITHUB_ENV
 
       - name: Install dependencies
-        run: |
-          export PNPM_HOME="$HOME/.local/share/pnpm"
-          export PATH="$PNPM_HOME:$PATH"
-          pnpm install
+        run: pnpm install
 
       - name: Run tests
         run: |
-          export PNPM_HOME="$HOME/.local/share/pnpm"
-          export PATH="$PNPM_HOME:$PATH"
           pnpm run prettier
           pnpm run lint
           pnpm run test:unit
