@@ -7,7 +7,7 @@ export const MenuIcon = () => {
 			viewBox="0 0 24 24"
 			fill="none"
 			stroke="currentColor"
-			strokeWidth="2"
+			strokeWidth="3"
 			strokeLinecap="round"
 			strokeLinejoin="round"
 		>
