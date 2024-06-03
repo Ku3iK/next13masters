@@ -1,0 +1,2 @@
+schema: "${process.env.GRAPHQL_URL}"
+documents: '**/*.graphql'
