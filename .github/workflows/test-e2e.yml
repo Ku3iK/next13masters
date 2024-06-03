@@ -1,9 +1,7 @@
-name: E2E Tests
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+name: Playwright Tests
+
+on: push
+
 jobs:
   test:
     timeout-minutes: 60
@@ -21,6 +19,12 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
+      - name: Build application
+        run: pnpm run build
+      - name: Start application
+        run: pnpm run start &
+      - name: Wait for application to be ready
+        run: npx wait-on ${{ secrets.BASE_URL }}
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
