@@ -39,3 +39,7 @@ next-env.d.ts
 # ide
 .vscode
 .idea
+
+# tests
+/test-results
+test-results.json
