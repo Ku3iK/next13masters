@@ -21,8 +21,14 @@ jobs:
         run: pnpm install
       - name: Build application
         run: pnpm run build
+        env:
+          GRAPHQL_URL: ${{ secrets.GRAPHQL_URL }}
+          HYGRAPH_MUTATION_TOKEN: ${{ secrets.HYGRAPH_MUTATION_TOKEN }}
       - name: Start application
         run: pnpm run start &
+        env:
+          GRAPHQL_URL: ${{ secrets.GRAPHQL_URL }}
+          HYGRAPH_MUTATION_TOKEN: ${{ secrets.HYGRAPH_MUTATION_TOKEN }}
       - name: Wait for application to be ready
         run: npx wait-on ${{ secrets.BASE_URL }}
       - name: Install Playwright Browsers
