@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { productGetById } from "@/api/products/products";
 import { ImageResponse } from "next/og";
+import { productGetById } from "@/api/products/products";
 
 export const runtime = "edge";
 
