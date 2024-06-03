@@ -20,6 +20,11 @@ jobs:
         with:
           version: '9'
 
+      - name: Verify pnpm installation
+        run: |
+          pnpm --version
+          echo $PATH
+
       - name: Install dependencies
         run: pnpm install
 
