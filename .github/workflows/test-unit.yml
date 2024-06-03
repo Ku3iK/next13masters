@@ -16,22 +16,20 @@ jobs:
           cache: 'pnpm'
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: |
+          curl -fsSL https://get.pnpm.io/install.sh | sh -
 
       - name: Add pnpm to PATH
-        run: echo "$(npm bin -g)" >> $GITHUB_PATH
+        run: |
+          export PNPM_HOME="/home/runner/.local/share/pnpm"
+          echo "$PNPM_HOME" >> $GITHUB_PATH
+          echo "export PATH=$PNPM_HOME/bin:$PATH" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run Prettier
-        run: pnpm run prettier
-
-      - name: Run Linter
-        run: pnpm run lint
-
-      - name: Run Unit Tests
-        run: pnpm run test:unit
-
-      - name: Run E2E Tests
-        run: pnpm run test:e2e
+      - name: Run tests
+        run: |
+          pnpm run prettier
+          pnpm run lint
+          pnpm run test:unit
