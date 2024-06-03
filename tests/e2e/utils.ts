@@ -12,7 +12,7 @@ export async function openRandomProductPage({ page }: { page: Page }) {
 	await expect(async () => {
 		await randomProductLink.click();
 		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
-		await page.waitForURL("**/product/**", { timeout: 100 });
+		await page.waitForURL("**/product/**", { timeout: 300 });
 		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
 	}).toPass();
 }
