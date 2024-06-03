@@ -51,7 +51,7 @@ export default async function SingleProductPage({ params }: { params: { productI
 	return (
 		<div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-12 gap-x-8 bg-white">
 			<main className="col-span-9 px-8 py-4 shadow-xl">
-				<article className="flex w-full flex-col gap-12 md:flex-row">
+				<article className="flex w-full flex-col gap-12">
 					{product.images[0] && (
 						<ProductImage image={{ src: product.images[0].url, alt: product.name }} />
 					)}
