@@ -11,7 +11,6 @@ test.describe("Environment and UI Tests", () => {
 					System: ["OS", "Shell"],
 					Binaries: ["Node", "pnpm"],
 					Browsers: ["Chrome"],
-					IDEs: ["VSCode"],
 					Utilities: ["Git"],
 				},
 				{ json: true, showNotFound: true },
@@ -82,14 +81,6 @@ type EnvinfoResult = {
 					path: string;
 			  };
 		pnpm:
-			| string
-			| {
-					version: string;
-					path: string;
-			  };
-	};
-	IDEs: {
-		VSCode:
 			| string
 			| {
 					version: string;
