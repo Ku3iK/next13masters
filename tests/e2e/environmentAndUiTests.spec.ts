@@ -31,12 +31,12 @@ test.describe("Environment and UI Tests", () => {
 		const GitVersion = getVersion(info.Utilities.Git);
 
 		expect(
-			semver.satisfies(NodeVersion, ">=20.0.0"),
-			`Expected Node version newer than 20.0.0 but got ${NodeVersion}`,
+			semver.satisfies(NodeVersion, ">=20.14.0"),
+			`Expected Node version newer than 20.14.0 but got ${NodeVersion}`,
 		).toBe(true);
 		expect(
-			semver.satisfies(pnpmVersion, ">=8.6.0"),
-			`Expected pnpm version newer than 8.6.0 but got ${pnpmVersion}`,
+			semver.satisfies(pnpmVersion, ">=9.0.4"),
+			`Expected pnpm version newer than 9.0.4 but got ${pnpmVersion}`,
 		).toBe(true);
 		expect(
 			semver.satisfies(VSCodeVersion, ">=1.7.0"),
