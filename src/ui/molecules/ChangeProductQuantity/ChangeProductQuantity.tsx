@@ -1,6 +1,6 @@
 "use client";
 
-import { experimental_useOptimistic as useOptimistic } from "react";
+import { useOptimistic } from "react";
 import { changeItemQuantity } from "@/api/cart/actions";
 
 export const ChangeProductQuantity = ({

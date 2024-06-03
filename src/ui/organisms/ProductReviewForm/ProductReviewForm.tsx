@@ -1,6 +1,6 @@
 "use client";
 
-import { experimental_useOptimistic as useOptimistic } from "react";
+import { useOptimistic } from "react";
 import { Input } from "@/ui/atoms/Input/Input";
 import { productAddReview, publishProductReviewById } from "@/api/products/products";
 

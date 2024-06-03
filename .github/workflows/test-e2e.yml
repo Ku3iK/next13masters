@@ -1,0 +1,47 @@
+name: E2E Tests
+
+on: push
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Use Node.js 20.14.0
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.14.0
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build application
+        run: pnpm run build
+        env:
+          GRAPHQL_URL: ${{ secrets.GRAPHQL_URL }}
+          HYGRAPH_MUTATION_TOKEN: ${{ secrets.HYGRAPH_MUTATION_TOKEN }}
+      - name: Start application
+        run: pnpm run start &
+        env:
+          GRAPHQL_URL: ${{ secrets.GRAPHQL_URL }}
+          HYGRAPH_MUTATION_TOKEN: ${{ secrets.HYGRAPH_MUTATION_TOKEN }}
+      - name: Wait for application to be ready
+        run: npx wait-on ${{ secrets.BASE_URL }}
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+      - name: Run Playwright tests
+        run: pnpm exec playwright test
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          GRAPHQL_URL: ${{ secrets.GRAPHQL_URL }}
+          HYGRAPH_MUTATION_TOKEN: ${{ secrets.HYGRAPH_MUTATION_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

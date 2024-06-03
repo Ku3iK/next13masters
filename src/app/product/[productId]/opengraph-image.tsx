@@ -1,5 +1,5 @@
-import { ImageResponse } from "next/server";
 import { notFound } from "next/navigation";
+import { ImageResponse } from "next/og";
 import { productGetById } from "@/api/products/products";
 
 export const runtime = "edge";
