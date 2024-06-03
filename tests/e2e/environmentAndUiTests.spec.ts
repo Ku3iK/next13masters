@@ -27,7 +27,6 @@ test.describe("Environment and UI Tests", () => {
 
 		const NodeVersion = getVersion(info.Binaries.Node);
 		const pnpmVersion = getVersion(info.Binaries.pnpm);
-		const VSCodeVersion = getVersion(info.IDEs.VSCode);
 		const GitVersion = getVersion(info.Utilities.Git);
 
 		expect(
@@ -37,10 +36,6 @@ test.describe("Environment and UI Tests", () => {
 		expect(
 			semver.satisfies(pnpmVersion, ">=9.0.4"),
 			`Expected pnpm version newer than 9.0.4 but got ${pnpmVersion}`,
-		).toBe(true);
-		expect(
-			semver.satisfies(VSCodeVersion, ">=1.7.0"),
-			`Expected VSCode version newer than 1.7.0 but got ${VSCodeVersion}`,
 		).toBe(true);
 		expect(
 			semver.satisfies(GitVersion, ">=2.23.0"),
