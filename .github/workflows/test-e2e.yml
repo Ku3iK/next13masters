@@ -1,10 +1,6 @@
 name: E2E Tests
 
-on:
-  pull_request:
-    branches:
-      - main
-      - develop
+on: push
 
 jobs:
   e2e-test:
@@ -25,6 +21,16 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
+      - name: Build application
+        run: pnpm run build
+      - name: Start server
+        run: pnpm run start &
+      - name: Wait for server to be ready
+        run: |
+          echo "Waiting for server to be ready..."
+          while ! nc -z localhost 3000; do
+            sleep 1
+          done
       - name: Install Playwright browsers
         run: pnpm exec playwright install
       - name: Run E2E tests
