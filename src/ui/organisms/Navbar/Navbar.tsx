@@ -1,12 +1,14 @@
 import { type Route } from "next";
-import { BadgeDollarSign, ShoppingCart } from "lucide-react";
-import Link from "next/link";
+import { ShoppingCart } from "lucide-react";
+import NextLink from "next/link";
 import { ActiveLink } from "@/ui/atoms/ActiveLink/ActiveLink";
 import { SearchEngine } from "@/ui/molecules/SearchEngine/SearchEngine";
 import { getCartFromCookies } from "@/api/cart/cart";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { MenuIcon } from "@/components/icons/MenuIcon";
+import { Logotype } from "@/components/views/Logotype";
+import { routes } from "@/routes/routes";
 
 const navLinks = [
 	{ label: "Home", href: "/", exact: true },
@@ -39,10 +41,9 @@ export async function Navbar() {
 
 	return (
 		<header className="container mx-auto flex max-w-md items-center justify-between gap-6 p-2 py-6 sm:max-w-2xl sm:py-16 md:max-w-4xl lg:max-w-7xl lg:p-12">
-			<Link href={"/"} className="flex items-center gap-3">
-				<BadgeDollarSign width={64} height={64} />
-				<p>Next13Masters Shop</p>
-			</Link>
+			<NextLink href={routes.homepage.url()} className="flex items-center gap-3">
+				<Logotype />
+			</NextLink>
 			<SearchEngine />
 			<div className="flex items-center gap-4">
 				<div className="hidden lg:block">
@@ -61,7 +62,7 @@ export async function Navbar() {
 						</div>
 					</SheetContent>
 				</Sheet>
-				<Link href={"/cart"} className="group -m-2 flex items-center p-2">
+				<NextLink href={routes.cart.url()} className="group -m-2 flex items-center p-2">
 					<ShoppingCart
 						width={20}
 						height={20}
@@ -70,7 +71,7 @@ export async function Navbar() {
 					/>
 					<span className="ml-2 text-sm font-medium">{quantity}</span>
 					<span className="sr-only">Items in cart, view bag</span>
-				</Link>
+				</NextLink>
 			</div>
 		</header>
 	);
