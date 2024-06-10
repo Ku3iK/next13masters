@@ -1,2 +1,2 @@
 schema: "${process.env.GRAPHQL_URL}"
-documents: '**/*.graphql'
+documents: 'src/graphql/**/*.graphql'
