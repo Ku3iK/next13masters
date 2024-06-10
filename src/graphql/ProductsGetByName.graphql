@@ -1,5 +1,5 @@
-query ProductsGetByName($nameFragment: String!) {
-	products(where: { name_contains: $nameFragment }) {
+query ProductsGetByName($name: String!, $limit: Int) {
+	products(where: { name_contains: $name }, first: $limit) {
 		...ProductListItem
 	}
 }
