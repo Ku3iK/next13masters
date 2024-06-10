@@ -10,4 +10,11 @@ export const routes: Routes = {
 		name: "cart",
 		url: () => toUrlObject("/cart"),
 	},
+	search: {
+		name: "search",
+		url: (params) => {
+			const { query } = params || {};
+			return toUrlObject(`/search?query=${query || ""}`);
+		},
+	},
 };
