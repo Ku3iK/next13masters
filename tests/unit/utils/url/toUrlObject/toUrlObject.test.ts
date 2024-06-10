@@ -1,5 +1,6 @@
 import { type UrlObject } from "url";
 import { toUrlObject } from "@/utils/url/toUrlObject";
+import { routes } from "@/routes/routes"; // Import obiektu routes
 
 describe("toUrlObject", () => {
 	it("should convert a simple string URL to a UrlObject with pathname", () => {
@@ -40,5 +41,17 @@ describe("toUrlObject", () => {
 		const urlObject: UrlObject = toUrlObject(urlString);
 
 		expect(urlObject).toEqual({ pathname: "/path#section" });
+	});
+
+	it("should handle search route with query parameter", () => {
+		const urlObject: UrlObject = routes.search.url({ query: "test" });
+
+		expect(urlObject).toEqual({ pathname: "/search?query=test" });
+	});
+
+	it("should handle search route without query parameter", () => {
+		const urlObject: UrlObject = routes.search.url();
+
+		expect(urlObject).toEqual({ pathname: "/search?query=" });
 	});
 });
