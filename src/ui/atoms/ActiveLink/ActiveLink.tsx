@@ -1,18 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import clsx from "clsx";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { type ActiveLinkType } from "./ActiveLinkTypes";
+import { Button } from "@/components/ui/button";
 
-export const ActiveLink = ({
-	href,
-	className,
-	activeClassName,
-	exact,
-	children,
-	...props
-}: ActiveLinkType) => {
+export const ActiveLink = ({ href, exact, children, ...props }: ActiveLinkType) => {
 	const pathname = usePathname();
 	const matchedPath = (typeof href === "string" ? href : href.pathname) ?? null;
 	const isActive =
@@ -22,20 +15,15 @@ export const ActiveLink = ({
 		false;
 
 	return (
-		<Link
-			{...props}
-			href={href}
-			aria-current={isActive ? "page" : undefined}
-			className={clsx(
-				`border-b-2 border-solid border-transparent text-blue-400 transition-colors duration-300 ease-in-out hover:text-blue-600 ${
-					isActive && activeClassName
-				} ${className && className}`,
-				{
-					"border-b-blue-600": isActive,
-				},
-			)}
-		>
-			{children}
-		</Link>
+		<Button asChild variant={isActive ? "default" : "link"} size={"sm"}>
+			<NextLink
+				{...props}
+				href={href}
+				aria-current={isActive ? "page" : undefined}
+				className={"hover:bg-accent hover:no-underline"}
+			>
+				{children}
+			</NextLink>
+		</Button>
 	);
 };
