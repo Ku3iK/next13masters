@@ -10,7 +10,6 @@ import {
 	ProductsGetTotalNumberDocument,
 	ProductsGetByCategorySlugPerPageDocument,
 	ProductsGetByCollectionSlugDocument,
-	ProductsGetByNameDocument,
 	ProductAddReviewDocument,
 	ProductReviewPublishByIdDocument,
 	type ProductOrderByInput,
@@ -107,17 +106,6 @@ export const productsGetByCollectionSlug = async (collectionSlug: string) => {
 		collectionName: response.collections[0]?.name,
 		products: response.collections[0]?.products,
 	};
-};
-
-export const productsGetByName = async (nameFragment: string) => {
-	const response = await executeGraphql({
-		query: ProductsGetByNameDocument,
-		variables: {
-			nameFragment: nameFragment,
-		},
-	});
-
-	return response.products;
 };
 
 export const productAddReview = async (
