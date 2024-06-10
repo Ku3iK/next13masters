@@ -1,15 +1,16 @@
-import NextImage from "next/image";
+import NextLink from "next/link";
+import { Button } from "@/components/ui/button";
+import { routes } from "@/routes/routes";
 
 export const Logotype = () => {
 	return (
-		<NextImage
-			src={"/site-branding/vibe-wear-logotype.svg"}
-			alt={"VibeWear logotype"}
-			width={200}
-			height={40}
-			style={{
-				objectFit: "contain",
-			}}
-		/>
+		<Button asChild variant={"link"}>
+			<NextLink
+				href={routes.homepage.url()}
+				className="whitespace-nowrap text-lg font-bold hover:bg-accent hover:no-underline sm:text-xl md:text-2xl"
+			>
+				VibeWear
+			</NextLink>
+		</Button>
 	);
 };
