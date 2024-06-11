@@ -1,16 +1,16 @@
-import { type UrlObject } from "url";
+import { type Route } from "next";
 
-type RouteParams = {
-	query?: string;
-};
+type RouteParams = { [key: string]: string | number | undefined };
 
-type RouteImpl = {
+type RouteDefinition<T extends RouteParams> = {
 	name: string;
-	url: (params?: RouteParams) => UrlObject;
+	url: (params?: T) => Route;
 };
-
-type RouteKeys = "homepage" | "cart" | "search";
 
 export type Routes = {
-	[K in RouteKeys]: RouteImpl;
+	homepage: RouteDefinition<{}>;
+	cart: RouteDefinition<{}>;
+	search: RouteDefinition<{ query: string }>;
+	products: RouteDefinition<{}>;
+	categories: RouteDefinition<{ category: string }>;
 };
