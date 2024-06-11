@@ -21,7 +21,5 @@ export const productsGetByName = async ({
 		variables,
 	});
 
-	console.log({ resultsTest: response });
-
 	return response.products;
 };

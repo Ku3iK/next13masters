@@ -35,8 +35,6 @@ const SearchEngineComponent = () => {
 		{ enabled: !!debouncedSearchTerm },
 	);
 
-	console.log({ products, isError, isLoading });
-
 	return (
 		<>
 			<Button variant={"ghost"} size={"icon"} color={"primary"} onClick={() => setIsOpen(true)}>
