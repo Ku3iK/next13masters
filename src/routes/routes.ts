@@ -18,6 +18,10 @@ export const routes: Routes = {
 		name: "products",
 		url: () => "/products",
 	},
+	product: {
+		name: "product",
+		url: (params) => `/product/${params?.id || ""}` as Route,
+	},
 	search: {
 		name: "search",
 		url: (params) => `/search?query=${params?.query || ""}`,

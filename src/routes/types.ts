@@ -12,5 +12,6 @@ export type Routes = {
 	cart: RouteDefinition<{}>;
 	search: RouteDefinition<{ query: string }>;
 	products: RouteDefinition<{}>;
+	product: RouteDefinition<{ id: string }>;
 	categories: RouteDefinition<{ category: string }>;
 };

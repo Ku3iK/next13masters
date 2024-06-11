@@ -2,11 +2,14 @@
 
 import { useState, useCallback, memo } from "react";
 import { SearchIcon } from "lucide-react";
+import NextLink from "next/link";
 import { CommandDialog, CommandEmpty, CommandInput, CommandList } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch";
 import { useProductsSearchQuery } from "@/services/queries/hooks/useProductsSearchQuery";
+import { routes } from "@/routes";
+import { SearchEngineProductResult } from "@/ui/molecules/SearchEngine/partials/SearchEngineProductResult";
 
 const SEARCH_ENGINE_TEXT = "Type a search...";
 
@@ -35,6 +38,45 @@ const SearchEngineComponent = () => {
 		{ enabled: !!debouncedSearchTerm },
 	);
 
+	const renderContent = () => {
+		if (isLoading) {
+			return <CommandEmpty>Loading...</CommandEmpty>;
+		}
+
+		if (isError) {
+			return <CommandEmpty>Error loading results: {error.message}</CommandEmpty>;
+		}
+
+		if (products?.length === 0) {
+			return <CommandEmpty>No results for: {debouncedSearchTerm}</CommandEmpty>;
+		}
+
+		if (!!products?.length) {
+			return (
+				<div className={"flex flex-col gap-4 p-3"}>
+					<ul className={"flex flex-col gap-3"}>
+						{products.map((product) => {
+							const { name, id } = product;
+
+							return (
+								<li key={`product-${name}-${id}`}>
+									<SearchEngineProductResult {...product} />
+								</li>
+							);
+						})}
+					</ul>
+					<Button asChild className={"w-full"}>
+						<NextLink href={routes.search.url({ query: debouncedSearchTerm })}>
+							See all results
+						</NextLink>
+					</Button>
+				</div>
+			);
+		}
+
+		return null;
+	};
+
 	return (
 		<>
 			<Button variant={"ghost"} size={"icon"} color={"primary"} onClick={() => setIsOpen(true)}>
@@ -47,17 +89,7 @@ const SearchEngineComponent = () => {
 					value={searchTerm}
 					onValueChange={setSearchTerm}
 				/>
-				<CommandList>
-					{isLoading && <CommandEmpty>Loading...</CommandEmpty>}
-					{isError && <CommandEmpty>Error loading results: {error.message}</CommandEmpty>}
-					{!isLoading && !isError && !!products && (
-						<ul>
-							{products.map(({ id, name }) => (
-								<li key={`product-${name}-${id}`}>{name}</li>
-							))}
-						</ul>
-					)}
-				</CommandList>
+				<CommandList>{renderContent()}</CommandList>
 			</CommandDialog>
 		</>
 	);
