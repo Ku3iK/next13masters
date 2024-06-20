@@ -54,7 +54,7 @@ const SearchEngineComponent = () => {
 		if (!!products?.length) {
 			return (
 				<div className={"flex flex-col gap-4 p-3"}>
-					<ul className={"flex flex-col gap-3"}>
+					<ul className={"flex flex-col gap-3"} data-testid="search-results">
 						{products.map((product) => {
 							const { name, id } = product;
 
@@ -65,7 +65,7 @@ const SearchEngineComponent = () => {
 							);
 						})}
 					</ul>
-					<Button asChild className={"w-full"}>
+					<Button asChild className={"w-full"} data-testid="search-results-see-all">
 						<NextLink href={routes.search.url({ query: debouncedSearchTerm })}>
 							See all results
 						</NextLink>
@@ -79,7 +79,13 @@ const SearchEngineComponent = () => {
 
 	return (
 		<>
-			<Button variant={"ghost"} size={"icon"} color={"primary"} onClick={() => setIsOpen(true)}>
+			<Button
+				variant={"ghost"}
+				size={"icon"}
+				color={"primary"}
+				onClick={() => setIsOpen(true)}
+				data-testid="search-button"
+			>
 				<SearchIcon />
 				<span className="sr-only">{SEARCH_ENGINE_TEXT}</span>
 			</Button>
@@ -88,6 +94,7 @@ const SearchEngineComponent = () => {
 					placeholder={SEARCH_ENGINE_TEXT}
 					value={searchTerm}
 					onValueChange={setSearchTerm}
+					data-testid="search-input"
 				/>
 				<CommandList>{renderContent()}</CommandList>
 			</CommandDialog>

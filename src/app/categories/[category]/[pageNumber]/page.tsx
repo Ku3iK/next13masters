@@ -21,7 +21,9 @@ export default async function CategoryProductPage({
 
 	return (
 		<>
-			<h1>Accessories page {params.pageNumber}</h1>
+			<h1 className={"first-letter:uppercase"}>
+				{params.category} page {params.pageNumber}
+			</h1>
 			<ProductList products={products} />
 		</>
 	);

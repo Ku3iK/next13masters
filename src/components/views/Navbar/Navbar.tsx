@@ -11,7 +11,7 @@ const NavbarContent = () => {
 	const navLinks = getNavLinks();
 
 	return (
-		<ul className="flex flex-col justify-center gap-2 lg:flex-row lg:gap-4">
+		<ul className="flex flex-col justify-center gap-2 lg:flex-row lg:gap-4" data-testid="nav-links">
 			{navLinks.map(({ label, href, exact }) => (
 				<li key={href}>
 					<ActiveLink href={href} exact={exact}>

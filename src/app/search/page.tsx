@@ -14,8 +14,6 @@ export default async function SearchPage({ searchParams }: { searchParams: { que
 	return (
 		<>
 			<h1 className="mb-4">Search results</h1>
-			<ProductList products={products} />
-
 			{!products.length ? <p>No results</p> : <ProductList products={products} />}
 		</>
 	);

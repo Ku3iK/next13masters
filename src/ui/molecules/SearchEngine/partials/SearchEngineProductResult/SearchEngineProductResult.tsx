@@ -16,6 +16,7 @@ export const SearchEngineProductResult = ({
 			<NextLink
 				href={routes.product.url({ id })}
 				className={"ju flex h-auto w-full items-center gap-4"}
+				data-testid="product-link"
 			>
 				{images[0]?.url && (
 					<NextImage
@@ -24,11 +25,12 @@ export const SearchEngineProductResult = ({
 						width={36}
 						height={36}
 						className={"aspect-square rounded bg-accent object-contain p-1"}
+						data-testid="product-image"
 					/>
 				)}
-				<div className={"flex flex-col gap-1"}>
-					<p className={"text-lg text-primary"}>{name}</p>
-					<p className={"ml-1 text-sm text-neutral-900"}>{formatMoney(price / 100)}</p>
+				<div className={"flex flex-col gap-1"} data-testid="product-info">
+					<p data-testid="product-name">{name}</p>
+					<p data-testid="product-price">{formatMoney(price / 100)}</p>
 				</div>
 			</NextLink>
 		</Button>
