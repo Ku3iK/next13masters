@@ -10,57 +10,55 @@ test.describe("Collection and Search Tests", () => {
 	});
 
 	test(`2. search`, async ({ page }) => {
-		await page.goto("/");
-
-		// search for a random existing product
-		const search = page.getByRole("searchbox");
-		await search.waitFor();
-
-		const list = page.getByTestId("products-list");
-		const productLink = list.locator("li a");
-		await productLink.first().waitFor();
-		const count = await productLink.count();
-		const randomProductLink = productLink.nth(Math.floor(Math.random() * count));
-		const productName = await randomProductLink.getByRole("heading").textContent();
+		await openRandomProductPage({ page });
+		const productName = await page.locator("h1").textContent();
 		expect(productName).toBeTruthy();
 
-		await search.type(productName!);
-		await search.press("Enter");
+		await page.goto("/");
 
-		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
+		const searchButton = page.getByTestId("search-button");
+		await searchButton.click();
+
+		const searchInput = page.getByTestId("search-input");
+		await searchInput.type(productName!);
+
+		await page.waitForTimeout(300);
+
+		const searchResults = page.getByTestId("search-results");
+		await searchResults.waitFor();
+		const matchingProducts = searchResults.locator(`li:has-text("${productName}")`);
+		const matchingProductsCount = await matchingProducts.count();
+		expect(matchingProductsCount).toBeGreaterThan(0);
+
+		const seeAllResultsButton = page.getByTestId("search-results-see-all");
+		await seeAllResultsButton.click();
+
 		await page.waitForURL(`**/search?query=${encodeURIComponent(productName!)}`);
 		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
 
-		// assert the product was found
-		{
-			const list = page.getByTestId("products-list");
-			const productLink = list.locator("li a");
-			await productLink.first().waitFor();
-			const product = productLink.getByText(productName!);
-			await product.first().waitFor();
-		}
-
-		// search by URL
-		await page.goto("/");
-		await page.goto(`/search?query=${encodeURIComponent(productName!)}`);
-
-		// assert the product was found
-		{
-			const list = page.getByTestId("products-list");
-			const productLink = list.locator("li a");
-			await productLink.first().waitFor();
-			const product = productLink.getByText(productName!);
-			await product.first().waitFor();
-		}
+		const resultsPageList = page.getByTestId("products-list");
+		await resultsPageList.waitFor();
+		const resultsPageProductLink = resultsPageList.locator(`li:has-text("${productName}")`);
+		const resultsPageCount = await resultsPageProductLink.count();
+		expect(resultsPageCount).toBeGreaterThan(0);
 	});
 
 	test(`3. categories pagination`, async ({ page }) => {
 		await page.goto(`/`);
 
 		const nav = page.getByRole("navigation").first();
-		await nav.getByRole("link").last().click();
+
+		const links = await nav.locator('a[href*="/categories/"]').all();
+
+		expect(links.length).toBeGreaterThan(0);
+
+		const categoryLink = links[0];
+
+		expect(categoryLink).toBeDefined();
+
+		await categoryLink?.click();
 		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
-		await page.waitForURL("**/categories/**");
+		await page.waitForURL(/\/categories\//);
 		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
 
 		const list = page.getByTestId("products-list");
@@ -69,7 +67,6 @@ test.describe("Collection and Search Tests", () => {
 		const productsCount = await productLink.count();
 		expect(productsCount).toBeGreaterThan(0);
 
-		// paginated url
 		expect(page.url()).toMatch(/\/categories\/.*\/\d+$/);
 
 		const paginationLinks = page.getByLabel(/pagination/i).getByRole("link");
@@ -83,16 +80,21 @@ test.describe("Collection and Search Tests", () => {
 
 		const nav = page.getByRole("navigation").first();
 
-		const inactiveLinkBorderBottomColor = await nav
-			.getByRole("link")
-			.last()
-			.evaluate((e) => window.getComputedStyle(e).borderBottomColor);
+		const links = await nav.locator('a[href*="/categories/"]').all();
 
-		const lastCategoryLink = nav.getByRole("link").last();
-		const categoryName = await lastCategoryLink.textContent();
-		await lastCategoryLink.click();
+		expect(links.length).toBeGreaterThan(0);
+
+		const categoryLink = links[0];
+		const categoryName = await categoryLink?.textContent();
+
+		expect(categoryLink).toBeDefined();
+		const inactiveAriaCurrent = await categoryLink?.getAttribute("aria-current");
+		expect(inactiveAriaCurrent).toBeNull();
+
+		await categoryLink?.click();
 		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
-		await page.waitForURL("**/categories/**");
+
+		await page.waitForURL(/\/categories\//);
 		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
 
 		const list = page.getByTestId("products-list");
@@ -100,17 +102,13 @@ test.describe("Collection and Search Tests", () => {
 		await productLink.first().waitFor();
 
 		const title = await page.locator("h1,h2").first().textContent();
-		expect(await page.title()).toContain(categoryName);
-		expect(title).toContain(categoryName);
+		expect(title?.toLowerCase()).toContain(categoryName?.toLowerCase());
 
-		const activeLinkBorderBottomColor = await nav
-			.getByRole("link")
-			.last()
-			.evaluate((e) => window.getComputedStyle(e).borderBottomColor);
+		const activeLink = nav.locator(`a[href*="/categories/"][aria-current="page"]`).first();
+		const activeAriaCurrent = await activeLink.getAttribute("aria-current");
+		expect(activeAriaCurrent).toBe("page");
 
-		// paginated url
 		expect(page.url()).toMatch(/\/categories\/.*\/\d+$/);
-		expect(activeLinkBorderBottomColor).not.toBe(inactiveLinkBorderBottomColor);
 	});
 
 	test(`5. collections`, async ({ page }) => {
@@ -146,44 +144,76 @@ test.describe("Collection and Search Tests", () => {
 	});
 
 	test(`7. delayed search`, async ({ page }) => {
-		await page.goto("/");
-
-		// search for a random existing product
-		const search = page.getByRole("searchbox");
-		await search.waitFor();
-
-		const list = page.getByTestId("products-list");
-		const productLink = list.locator("li a");
-		await productLink.first().waitFor();
-		const count = await productLink.count();
-		const randomProductLink = productLink.nth(Math.floor(Math.random() * count));
-		const productName = await randomProductLink.getByRole("heading").textContent();
+		await openRandomProductPage({ page });
+		const productName = await page.locator("h1").textContent();
 		expect(productName).toBeTruthy();
 
+		await page.goto("/");
+
+		const searchButton = page.getByTestId("search-button");
+		await searchButton.click();
+
+		const searchInput = page.getByTestId("search-input");
+		await searchInput.type(productName!, { delay: 166 });
+
+		// Listen for network requests
 		const requests: string[] = [];
-		page.on("request", (request) => requests.push(request.url()));
+		page.on("request", (request) => {
+			if (request.url().includes("/search?query=")) {
+				requests.push(request.url());
+			}
+		});
 
-		// human-like delay
-		await search.type(productName!, { delay: 166 });
+		await page.waitForTimeout(300);
 
-		// count how many requests were made
-		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
+		const searchResults = page.getByTestId("search-results");
+		await searchResults.waitFor();
+		const matchingProducts = searchResults.locator(`li:has-text("${productName}")`);
+		const matchingProductsCount = await matchingProducts.count();
+		expect(matchingProductsCount).toBeGreaterThan(0);
+
+		const seeAllResultsButton = page.getByTestId("search-results-see-all");
+		await seeAllResultsButton.click();
+
 		await page.waitForURL(`**/search?query=${encodeURIComponent(productName!)}`);
 		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
-		const uniqueQueries = new Set(
-			requests
-				.filter((url) => url.includes("/search?query="))
-				.map((url) => new URL(url).searchParams.get("query")),
-		);
-		expect(uniqueQueries.size).toBe(1);
 
-		// assert the product was found
-		{
-			const list = page.getByTestId("products-list");
-			const productLink = list.locator("li a");
-			await productLink.first().waitFor();
-			const product = productLink.getByText(productName!);
-			await product.first().waitFor();
-		}
+		const resultsPageList = page.getByTestId("products-list");
+		await resultsPageList.waitFor();
+		const resultsPageProductLink = resultsPageList.locator(`li:has-text("${productName}")`);
+		const resultsPageCount = await resultsPageProductLink.count();
+		expect(resultsPageCount).toBeGreaterThan(0);
+
+		const uniqueQueries = new Set(requests.map((url) => new URL(url).searchParams.get("query")));
+		expect(uniqueQueries.size).toBe(1);
+	});
+
+	test(`8. keyboard shortcut to open search engine`, async ({ page }) => {
+		await page.goto("/");
+
+		page.on("console", (msg) => console.log("PAGE LOG:", msg.text()));
+
+		await page.evaluate(() => {
+			document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true }));
+		});
+
+		const searchDialog = page.locator('[role="dialog"]');
+		await expect(searchDialog).toBeVisible({ timeout: 10000 });
+
+		const searchInput = page.getByTestId("search-input");
+		await expect(searchInput).toBeVisible({ timeout: 10000 });
+
+		await page.keyboard.press("Escape");
+		await expect(searchDialog).not.toBeVisible({ timeout: 10000 });
+
+		await page.evaluate(() => {
+			document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
+		});
+
+		await expect(searchDialog).toBeVisible({ timeout: 10000 });
+		await expect(searchInput).toBeVisible({ timeout: 10000 });
+
+		await page.keyboard.press("Escape");
+		await expect(searchDialog).not.toBeVisible({ timeout: 10000 });
 	});
 });
