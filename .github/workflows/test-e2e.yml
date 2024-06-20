@@ -22,12 +22,12 @@ jobs:
       - name: Build application
         run: pnpm run build
         env:
-          GRAPHQL_URL: ${{ secrets.GRAPHQL_URL }}
+          NEXT_PUBLIC_GRAPHQL_URL: ${{ secrets.NEXT_PUBLIC_GRAPHQL_URL }}
           HYGRAPH_MUTATION_TOKEN: ${{ secrets.HYGRAPH_MUTATION_TOKEN }}
       - name: Start application
         run: pnpm run start &
         env:
-          GRAPHQL_URL: ${{ secrets.GRAPHQL_URL }}
+          NEXT_PUBLIC_GRAPHQL_URL: ${{ secrets.NEXT_PUBLIC_GRAPHQL_URL }}
           HYGRAPH_MUTATION_TOKEN: ${{ secrets.HYGRAPH_MUTATION_TOKEN }}
       - name: Wait for application to be ready
         run: npx wait-on ${{ secrets.BASE_URL }}
@@ -37,7 +37,7 @@ jobs:
         run: pnpm exec playwright test
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
-          GRAPHQL_URL: ${{ secrets.GRAPHQL_URL }}
+          NEXT_PUBLIC_GRAPHQL_URL: ${{ secrets.NEXT_PUBLIC_GRAPHQL_URL }}
           HYGRAPH_MUTATION_TOKEN: ${{ secrets.HYGRAPH_MUTATION_TOKEN }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

@@ -12,7 +12,7 @@ require("dotenv").config();
  */
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
-	testDir: "./.",
+	testDir: "./tests/e2e/.",
 	fullyParallel: false,
 	workers: 1,
 	reporter: [["line"], ["json", { outputFile: "test-results.json" }]],

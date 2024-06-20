@@ -25,6 +25,6 @@ pnpm dev
 copy `.env.sample` and `.env.local.sample` files and add values to the `ENV variables` already created in them.
 
 ```
-GRAPHQL_URL= // GraphQL server URL
+NEXT_PUBLIC_GRAPHQL_URL= // GraphQL server URL
 HYGRAPH_MUTATION_TOKEN= // Token to add access for mutation endpoint
 ```
