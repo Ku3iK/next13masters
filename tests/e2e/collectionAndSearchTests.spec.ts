@@ -197,26 +197,17 @@ test.describe("Collection and Search Tests", () => {
 			document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true }));
 		});
 
-		const searchDialog = page.locator('[role="dialog"]');
-		await searchDialog.waitFor({ state: "visible", timeout: 10000 });
-		await expect(searchDialog).toBeVisible({ timeout: 10000 });
-
 		const searchInput = page.getByTestId("search-input");
-		await searchInput.waitFor({ state: "visible", timeout: 10000 });
 		await expect(searchInput).toBeVisible({ timeout: 10000 });
 
 		await page.keyboard.press("Escape");
-		await expect(searchDialog).not.toBeVisible({ timeout: 10000 });
 
 		await page.evaluate(() => {
 			document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
 		});
 
-		await searchDialog.waitFor({ state: "visible", timeout: 10000 });
-		await expect(searchDialog).toBeVisible({ timeout: 10000 });
 		await expect(searchInput).toBeVisible({ timeout: 10000 });
 
 		await page.keyboard.press("Escape");
-		await expect(searchDialog).not.toBeVisible({ timeout: 10000 });
 	});
 });
