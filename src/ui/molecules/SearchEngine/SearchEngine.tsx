@@ -6,17 +6,17 @@ import NextLink from "next/link";
 import { CommandDialog, CommandEmpty, CommandInput, CommandList } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
-import { useDebouncedSearch } from "@/hooks/useDebouncedSearch";
 import { useProductsSearchQuery } from "@/services/queries/hooks/useProductsSearchQuery";
 import { routes } from "@/routes";
 import { SearchEngineProductResult } from "@/ui/molecules/SearchEngine/partials/SearchEngineProductResult";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const SEARCH_ENGINE_TEXT = "Type a search...";
 
 const SearchEngineComponent = () => {
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const debouncedSearchTerm = useDebouncedSearch(searchTerm, 300);
+	const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
 	const handleKeyDown = useCallback((e: KeyboardEvent) => {
 		const isSearchShortcutPressed = e.key === "k" && (e.metaKey || e.ctrlKey);
