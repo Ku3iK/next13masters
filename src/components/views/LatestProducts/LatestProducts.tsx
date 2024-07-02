@@ -13,29 +13,31 @@ export const LatestProducts = ({ products }: LatestProductsProps) => {
 	}
 
 	return (
-		<div>
+		<div data-testid="related-products">
 			<h2 className="text-2xl font-bold">Latest Products</h2>
-			<div className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+			<ul data-testid="products-list" className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 				{products.map(({ id, images, name, price }) => (
-					<NextLink key={id} href={routes.product.url({ id })} prefetch={false}>
-						<Card>
-							<CardContent>
-								<NextImage
-									src={images[0]?.url || PRODUCT_PLACEHOLDER}
-									alt={name}
-									width={300}
-									height={300}
-									className="m-4 w-full rounded-lg object-cover"
-								/>
-								<div className="mt-4">
-									<h3 className="text-lg font-semibold">{name}</h3>
-									<p className="text-muted-foreground">{formatMoney(price)}</p>
-								</div>
-							</CardContent>
-						</Card>
-					</NextLink>
+					<li key={id}>
+						<NextLink href={routes.product.url({ id })} prefetch={false}>
+							<Card>
+								<CardContent>
+									<NextImage
+										src={images[0]?.url || PRODUCT_PLACEHOLDER}
+										alt={name}
+										width={300}
+										height={300}
+										className="m-4 w-full rounded-lg object-cover"
+									/>
+									<div className="mt-4">
+										<h3 className="text-lg font-semibold">{name}</h3>
+										<p className="text-muted-foreground">{formatMoney(price)}</p>
+									</div>
+								</CardContent>
+							</Card>
+						</NextLink>
+					</li>
 				))}
-			</div>
+			</ul>
 		</div>
 	);
 };
