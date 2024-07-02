@@ -45,7 +45,7 @@ export default async function CartPage() {
 									<td className="text-center">
 										<ChangeProductQuantity itemId={item.id} quantity={item.quantity} />
 									</td>
-									<td>{formatMoney(item.product.price / 100)}</td>
+									<td>{formatMoney(item.product.price)}</td>
 									<td>
 										<RemoveButton itemId={item.id} />
 									</td>
