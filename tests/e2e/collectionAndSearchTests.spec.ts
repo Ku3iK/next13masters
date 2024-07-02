@@ -191,6 +191,8 @@ test.describe("Collection and Search Tests", () => {
 	test(`8. keyboard shortcut to open search engine`, async ({ page }) => {
 		await page.goto("/");
 
+		page.on("console", (msg) => console.log("PAGE LOG:", msg.text()));
+
 		await page.evaluate(() => {
 			document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true }));
 		});
