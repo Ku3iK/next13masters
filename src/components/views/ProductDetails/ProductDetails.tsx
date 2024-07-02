@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { type ProductDetailsProps } from "@/components/views/ProductDetails/types";
 import { addProductToCartServerAction } from "@/utils/cart/addProductToCartServerAction";
-import { AddToCartButton } from "@/ui/atoms/AddToCartButton/AddToCartButton";
+import { AddToCartButton } from "@/components/views/AddToCartButton";
 import { StockStatus } from "@/components/views/StockStatus";
 import { formatMoney } from "@/utils/formatMoney";
 import { routes } from "@/routes";
