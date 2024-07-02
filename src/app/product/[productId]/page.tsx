@@ -74,7 +74,7 @@ export default async function SingleProductPage({ params }: ProductPageParams) {
 									</div>
 								</div>
 								<p className="text-muted-foreground">
-									I've been using these headphones for a few weeks and they've been a game-changer.
+									Ive been using these headphones for a few weeks and theyve been a game-changer.
 									The sound quality is incredible, and the wireless connectivity is seamless. Highly
 									recommended!
 								</p>
