@@ -13,8 +13,10 @@ export const LatestProducts = ({ products }: LatestProductsProps) => {
 	}
 
 	return (
-		<div data-testid="related-products">
-			<h2 className="text-2xl font-bold">Latest Products</h2>
+		<section aria-labelledby="latest-products-heading" data-testid="related-products">
+			<h2 id="latest-products-heading" className="text-2xl font-bold">
+				Latest Products
+			</h2>
 			<ul data-testid="products-list" className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 				{products.map(({ id, images, name, price }) => (
 					<li key={id}>
@@ -38,6 +40,6 @@ export const LatestProducts = ({ products }: LatestProductsProps) => {
 					</li>
 				))}
 			</ul>
-		</div>
+		</section>
 	);
 };
