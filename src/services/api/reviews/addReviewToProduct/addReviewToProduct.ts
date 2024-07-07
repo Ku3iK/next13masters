@@ -27,7 +27,7 @@ export const addReviewToProductByClientSide = async (
 		body: JSON.stringify(params),
 	});
 
-	const { data, error }: ApiResponse<{ reviewId: string }> = await response.json();
+	const { data, error } = (await response.json()) as ApiResponse<{ reviewId: string }>;
 
 	if (!response.ok) {
 		throw new Error(error || "An unknown error occurred");
