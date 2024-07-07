@@ -8,5 +8,5 @@ export type SingleReviewProps = {
 };
 
 export type ReviewsProps = {
-	reviews: ReviewsByProductIdQuery["reviews"];
+	reviews: ReviewsByProductIdQuery["reviews"] | undefined;
 };

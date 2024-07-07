@@ -3,7 +3,7 @@ import { ReviewsNotFound } from "@/components/views/Reviews/ReviewsNotFound";
 import { SingleReview } from "@/components/views/Reviews/SingleReview";
 
 export const Reviews = ({ reviews }: ReviewsProps) => {
-	if (!reviews.length) {
+	if (!reviews?.length) {
 		return <ReviewsNotFound />;
 	}
 
@@ -13,8 +13,8 @@ export const Reviews = ({ reviews }: ReviewsProps) => {
 				Product Reviews
 			</h2>
 			<ul className="mt-4 grid gap-6">
-				{reviews.map(({ id, publishedBy, content, email, rating }) => {
-					const nameOfOpinionMaker = publishedBy?.name || email;
+				{reviews?.map(({ id, publishedBy, name, content, email, rating }) => {
+					const nameOfOpinionMaker = name || email;
 
 					return (
 						<li key={id}>
