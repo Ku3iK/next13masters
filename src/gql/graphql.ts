@@ -11607,7 +11607,7 @@ export type ProductGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, inStock: boolean, reviews: Array<{ id: string, rating: number, content: string, name: string, email: string, headline: string }>, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null };
+export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, inStock: boolean, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null };
 
 export type ProductListItemFragment = { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }>, reviews: Array<{ rating: number }> };
 
@@ -11677,6 +11677,14 @@ export type ProductsGetTotalNumberQueryVariables = Exact<{ [key: string]: never;
 
 
 export type ProductsGetTotalNumberQuery = { productsConnection: { aggregate: { count: number } } };
+
+export type ReviewsByProductIdQueryVariables = Exact<{
+  productId: Scalars['ID']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ReviewsByProductIdQuery = { reviews: Array<{ id: string, content: string, email: string, headline: string, name: string, publishedAt?: unknown | null, rating: number, publishedBy?: { name: string, picture?: string | null, id: string } | null }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -11826,14 +11834,6 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
     id
     name
     description
-    reviews(last: 10) {
-      id
-      rating
-      content
-      name
-      email
-      headline
-    }
     categories(first: 1) {
       name
     }
@@ -12030,3 +12030,25 @@ export const ProductsGetTotalNumberDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ProductsGetTotalNumberQuery, ProductsGetTotalNumberQueryVariables>;
+export const ReviewsByProductIdDocument = new TypedDocumentString(`
+    query ReviewsByProductId($productId: ID!, $first: Int = 10) {
+  reviews(
+    where: {product: {id: $productId}}
+    first: $first
+    orderBy: publishedAt_DESC
+  ) {
+    id
+    content
+    email
+    headline
+    name
+    publishedAt
+    rating
+    publishedBy {
+      name
+      picture
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ReviewsByProductIdQuery, ReviewsByProductIdQueryVariables>;

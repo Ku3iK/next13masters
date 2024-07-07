@@ -3,14 +3,6 @@ query ProductGetById($id: ID!) {
 		id
 		name
 		description
-		reviews(last: 10) {
-			id
-			rating
-			content
-			name
-			email
-			headline
-		}
 		categories(first: 1) {
 			name
 		}

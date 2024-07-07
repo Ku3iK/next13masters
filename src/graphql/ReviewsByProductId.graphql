@@ -1,0 +1,16 @@
+query ReviewsByProductId($productId: ID!, $first: Int = 10) {
+    reviews(where: { product: { id: $productId } }, first: $first, orderBy: publishedAt_DESC) {
+        id
+        content
+        email
+        headline
+        name
+        publishedAt
+        rating
+        publishedBy {
+            name
+            picture
+            id
+        }
+    }
+}
