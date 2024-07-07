@@ -6,6 +6,8 @@ import { type ApiResponse } from "@/services/types";
 export async function POST(req: NextRequest) {
 	"use server";
 
+	// TODO: add validation by using a zod schema
+
 	const params = (await req.json()) as AddReviewToProductParams;
 
 	try {
