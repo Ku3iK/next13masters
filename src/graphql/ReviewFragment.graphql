@@ -1,0 +1,14 @@
+fragment ReviewFields on Review {
+    id
+    content
+    email
+    headline
+    name
+    publishedAt
+    rating
+    publishedBy {
+        name
+        picture
+        id
+    }
+}

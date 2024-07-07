@@ -11678,6 +11678,8 @@ export type ProductsGetTotalNumberQueryVariables = Exact<{ [key: string]: never;
 
 export type ProductsGetTotalNumberQuery = { productsConnection: { aggregate: { count: number } } };
 
+export type ReviewFieldsFragment = { id: string, content: string, email: string, headline: string, name: string, publishedAt?: unknown | null, rating: number, publishedBy?: { name: string, picture?: string | null, id: string } | null };
+
 export type ReviewsByProductIdQueryVariables = Exact<{
   productId: Scalars['ID']['input'];
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -11731,6 +11733,22 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
+export const ReviewFieldsFragmentDoc = new TypedDocumentString(`
+    fragment ReviewFields on Review {
+  id
+  content
+  email
+  headline
+  name
+  publishedAt
+  rating
+  publishedBy {
+    name
+    picture
+    id
+  }
+}
+    `, {"fragmentName":"ReviewFields"}) as unknown as TypedDocumentString<ReviewFieldsFragment, unknown>;
 export const CartAddItemDocument = new TypedDocumentString(`
     mutation CartAddItem($cartId: ID!, $productId: ID!, $total: Int!) {
   createOrderItem(
@@ -12037,18 +12055,20 @@ export const ReviewsByProductIdDocument = new TypedDocumentString(`
     first: $first
     orderBy: publishedAt_DESC
   ) {
-    id
-    content
-    email
-    headline
-    name
-    publishedAt
-    rating
-    publishedBy {
-      name
-      picture
-      id
-    }
+    ...ReviewFields
   }
 }
-    `) as unknown as TypedDocumentString<ReviewsByProductIdQuery, ReviewsByProductIdQueryVariables>;
+    fragment ReviewFields on Review {
+  id
+  content
+  email
+  headline
+  name
+  publishedAt
+  rating
+  publishedBy {
+    name
+    picture
+    id
+  }
+}`) as unknown as TypedDocumentString<ReviewsByProductIdQuery, ReviewsByProductIdQueryVariables>;
