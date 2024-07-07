@@ -6,7 +6,8 @@ import { type ProductPageParams } from "@/app/product/[productId]/types";
 import { generatePageTitle } from "@/utils/metadata/generatePageTitle";
 import { ProductDetails } from "@/components/views/ProductDetails";
 import { LatestProductsSuspense } from "@/components/containers/LatestProducts";
-import { ProductReviewsSuspense } from "@/components/containers/ProductReviews";
+import { ProductReviews } from "@/components/containers/ProductReviews";
+import { ProductReviewForm } from "@/components/features/ProductReviewForm";
 
 export const generateStaticParams = async () => {
 	const products = await productsGetList();
@@ -52,7 +53,8 @@ export default async function SingleProductPage({ params }: ProductPageParams) {
 			</div>
 			<div className="col-span-2 grid gap-8">
 				<LatestProductsSuspense />
-				<ProductReviewsSuspense productId={productId} />
+				<ProductReviewForm productId={productId} />
+				<ProductReviews productId={productId} />
 			</div>
 		</div>
 	);
