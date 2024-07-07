@@ -10,7 +10,6 @@ import {
 	ProductsGetTotalNumberDocument,
 	ProductsGetByCategorySlugPerPageDocument,
 	ProductsGetByCollectionSlugDocument,
-	ProductAddReviewDocument,
 	ProductReviewPublishByIdDocument,
 	type ProductOrderByInput,
 	ProductsGetListWithRatesDocument,
@@ -106,32 +105,6 @@ export const productsGetByCollectionSlug = async (collectionSlug: string) => {
 		collectionName: response.collections[0]?.name,
 		products: response.collections[0]?.products,
 	};
-};
-
-export const productAddReview = async (
-	headline: string,
-	name: string,
-	email: string,
-	content: string,
-	rating: number,
-	productId: string,
-) => {
-	const response = await executeGraphql({
-		query: ProductAddReviewDocument,
-		variables: {
-			headline: headline,
-			name: name,
-			email: email,
-			content: content,
-			rating: rating,
-			productId: productId,
-		},
-		headers: {
-			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
-		},
-	});
-
-	return response.createReview?.id;
 };
 
 export const publishProductReviewById = async (reviewId: string) => {
