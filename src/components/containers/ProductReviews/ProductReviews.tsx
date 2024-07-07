@@ -1,19 +1,16 @@
-import { Suspense } from "react";
+"use client";
+
 import { type ProductReviewsProps } from "@/components/containers/ProductReviews/types";
-import { reviewsGetByProductId } from "@/services/api/reviews/reviewsByProductId";
 import { Reviews } from "@/components/views/Reviews";
 import { ReviewsSkeleton } from "@/components/views/Reviews/ReviewsSkeletons";
+import { ReviewsNotFound } from "@/components/views/Reviews/ReviewsNotFound";
+import { useReviewsByProductQuery } from "@/services/queries/hooks/reviews/useProductReviews";
 
-export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
-	const reviews = await reviewsGetByProductId({ productId });
+export const ProductReviews = ({ productId }: ProductReviewsProps) => {
+	const { data: reviews, isLoading, error } = useReviewsByProductQuery({ productId });
+
+	if (isLoading) return <ReviewsSkeleton />;
+	if (error) return <ReviewsNotFound />;
 
 	return <Reviews reviews={reviews} />;
-};
-
-export const ProductReviewsSuspense = (props: ProductReviewsProps) => {
-	return (
-		<Suspense fallback={<ReviewsSkeleton />}>
-			<ProductReviews {...props} />
-		</Suspense>
-	);
 };
