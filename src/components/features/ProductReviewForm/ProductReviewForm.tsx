@@ -16,7 +16,6 @@ import {
 	CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { type ProductReviewFormProps } from "@/components/features/ProductReviewForm/types";
 import { useAddReviewMutation } from "@/services/mutations/hooks/reviews/useAddReviewMutation";
 import { getReviewsByProductQueryKey } from "@/services/queries/hooks/reviews/useProductReviews";
@@ -81,8 +80,14 @@ export const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
 							<FormInput name="headline" label="Title" placeholder="Enter review title" />
 							<FormInput name="email" label="Email" placeholder="Enter your email" />
 							<div className="grid gap-2">
-								<Label htmlFor="rating">Rating</Label>
-								<div className="flex items-center gap-2">
+								<FormInput
+									name="rating"
+									label="Rating"
+									inputProps={{
+										type: "hidden",
+									}}
+								/>
+								<div className="flex cursor-pointer items-center gap-2">
 									{[1, 2, 3, 4, 5].map((star) => (
 										<StarIcon
 											key={star}
@@ -94,7 +99,7 @@ export const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
 							</div>
 							<FormTextarea name="content" label="Review" placeholder="Write your review" />
 						</div>
-						<CardFooter>
+						<CardFooter className={"px-0 pt-6"}>
 							<Button type="submit" disabled={isPending}>
 								Submit Review
 							</Button>
