@@ -28,10 +28,11 @@ export const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
 	const [rating, setRating] = useState<number>(0);
 	const { mutate: addReviewMutation, isPending } = useAddReviewMutation({
 		onSuccess: () => {
-			// TODO: add snackbar success message and verify why invalidateQueries is not working
-			void queryClient.invalidateQueries({
-				queryKey: getReviewsByProductQueryKey({ productId }),
-			});
+			setTimeout(() => {
+				void queryClient.invalidateQueries({
+					queryKey: getReviewsByProductQueryKey({ productId }),
+				});
+			}, 500);
 		},
 		onError: () => {
 			// 	TODO: add snackbar error message
