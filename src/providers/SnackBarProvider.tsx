@@ -4,7 +4,7 @@ import { SnackbarProvider } from "notistack";
 
 import React, { type PropsWithChildren } from "react";
 
-const SnackBarProvider = ({ children }: PropsWithChildren) => {
+export const SnackBarProvider = ({ children }: PropsWithChildren) => {
 	return (
 		<SnackbarProvider
 			maxSnack={3}
@@ -18,5 +18,3 @@ const SnackBarProvider = ({ children }: PropsWithChildren) => {
 		</SnackbarProvider>
 	);
 };
-
-export default SnackBarProvider;
