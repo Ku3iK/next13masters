@@ -1,7 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { type ZodIssue } from "zod";
 import { addReviewToProduct } from "@/services/api/reviews/addReviewToProduct";
-import { type AddReviewToProductParams } from "@/services/api/reviews/addReviewToProduct/types";
+import {
+	type AddReviewToProductByClientSideResponse,
+	type AddReviewToProductParams,
+} from "@/services/api/reviews/addReviewToProduct/types";
 import { type ApiResponse } from "@/services/types";
 import { addReviewFormSchema } from "@/lib/validators/ProductReviewFormValidator/ProductReviewFormValidator";
 
@@ -23,7 +26,7 @@ export async function POST(req: NextRequest) {
 
 		const reviewId = await addReviewToProduct(params);
 
-		const response: ApiResponse<{ reviewId: string }, null> = {
+		const response: ApiResponse<AddReviewToProductByClientSideResponse, null> = {
 			data: { reviewId: reviewId ?? "" },
 			error: null,
 		};

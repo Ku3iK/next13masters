@@ -1,6 +1,9 @@
 import { executeGraphql } from "@/api/grapghqlApiInstance";
 import { ProductAddReviewDocument } from "@/gql/graphql";
-import { type AddReviewToProductParams } from "@/services/api/reviews/addReviewToProduct/types";
+import {
+	type AddReviewToProductByClientSideResponse,
+	type AddReviewToProductParams,
+} from "@/services/api/reviews/addReviewToProduct/types";
 import { publishProductReviewById } from "@/api/products/products";
 import { type ApiResponse } from "@/services/types";
 
@@ -18,7 +21,7 @@ export const addReviewToProduct = async (params: AddReviewToProductParams) => {
 
 export const addReviewToProductByClientSide = async (
 	params: AddReviewToProductParams,
-): Promise<{ reviewId: string }> => {
+): Promise<AddReviewToProductByClientSideResponse> => {
 	const response = await fetch("/api/addReview", {
 		method: "POST",
 		headers: {
@@ -27,7 +30,8 @@ export const addReviewToProductByClientSide = async (
 		body: JSON.stringify(params),
 	});
 
-	const { data, error } = (await response.json()) as ApiResponse<{ reviewId: string }>;
+	const { data, error } =
+		(await response.json()) as ApiResponse<AddReviewToProductByClientSideResponse>;
 
 	if (!response.ok) {
 		throw new Error(error || "An unknown error occurred");

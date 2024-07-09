@@ -11,6 +11,6 @@ export type AddReviewToProductResponse = {
 	reviewId: string | undefined;
 };
 
-export type AddReviewToProduct = (
-	params: AddReviewToProductParams,
-) => Promise<AddReviewToProductResponse>;
+export type AddReviewToProductByClientSideResponse = {
+	reviewId: string;
+};
