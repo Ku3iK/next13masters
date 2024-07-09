@@ -7,7 +7,7 @@ export type GenericUseMutationOptions<TData, TVariables> = Omit<
 	"mutationFn"
 >;
 
-export interface ApiResponse<T> {
-	data: T | null;
-	error: string | null;
+export interface ApiResponse<TData = null, TError = null> {
+	data: TData | null;
+	error: TError | null;
 }
