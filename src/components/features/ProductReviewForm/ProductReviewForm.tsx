@@ -6,6 +6,7 @@ import { StarIcon } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
+import { enqueueSnackbar } from "notistack";
 import {
 	Card,
 	CardHeader,
@@ -26,19 +27,6 @@ import { FormTextarea } from "@/components/containers/FormTextarea";
 export const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
 	const queryClient = useQueryClient();
 	const [rating, setRating] = useState<number>(0);
-	const { mutate: addReviewMutation, isPending } = useAddReviewMutation({
-		onSuccess: () => {
-			setTimeout(() => {
-				void queryClient.invalidateQueries({
-					queryKey: getReviewsByProductQueryKey({ productId }),
-				});
-			}, 500);
-		},
-		onError: () => {
-			// 	TODO: add snackbar error message
-		},
-	});
-
 	const formMethods = useForm<z.infer<typeof addReviewFormSchema>>({
 		mode: "onChange",
 		resolver: zodResolver(addReviewFormSchema),
@@ -52,8 +40,22 @@ export const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
 		},
 	});
 
-	const { handleSubmit, setValue } = formMethods;
+	const { handleSubmit, setValue, reset: resetForm } = formMethods;
 
+	const { mutate: addReviewMutation, isPending } = useAddReviewMutation({
+		onSuccess: () => {
+			enqueueSnackbar("Successfully added review", { variant: "success" });
+			resetForm();
+			setTimeout(() => {
+				void queryClient.invalidateQueries({
+					queryKey: getReviewsByProductQueryKey({ productId }),
+				});
+			}, 500);
+		},
+		onError: () => {
+			enqueueSnackbar("Failed to add review", { variant: "error" });
+		},
+	});
 	const onReviewSubmit = (data: z.infer<typeof addReviewFormSchema>) => {
 		addReviewMutation({
 			...data,
