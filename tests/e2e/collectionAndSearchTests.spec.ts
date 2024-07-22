@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { openRandomProductPage } from "./utils";
 
+// TODO: change deprecated waitForNavigation to waitForURL in all tests. Now it resolve problem with bad free API performance.
+
 test.describe("Collection and Search Tests", () => {
 	test(`1. single product page implemented`, async ({ page }) => {
 		await openRandomProductPage({ page });
