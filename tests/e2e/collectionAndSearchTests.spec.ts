@@ -19,7 +19,7 @@ test.describe("Collection and Search Tests", () => {
 		const searchButton = page.getByTestId("search-button");
 		await searchButton.click();
 
-		const searchInput = page.getByTestId("search-input");
+		const searchInput = page.getByTestId("search-engine-input");
 		await searchInput.type(productName!);
 
 		const searchResults = page.getByTestId("search-results");
@@ -153,7 +153,7 @@ test.describe("Collection and Search Tests", () => {
 		const searchButton = page.getByTestId("search-button");
 		await searchButton.click();
 
-		const searchInput = page.getByTestId("search-input");
+		const searchInput = page.getByTestId("search-engine-input");
 		await searchInput.type(productName!, { delay: 166 });
 
 		const requests: string[] = [];
