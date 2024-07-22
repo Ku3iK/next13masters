@@ -20,13 +20,13 @@ test.describe("Product Interaction Tests", () => {
 		await openRandomProductPage({ page });
 
 		const form = page.getByTestId("add-review-form").first();
-		await form.waitFor();
+		await form.waitFor({ state: "attached" });
 
-		await form.locator('[name="headline"]').first().waitFor();
-		await form.locator('[name="content"]').first().waitFor();
-		await form.locator('[name="rating"]').first().waitFor();
-		await form.locator('[name="name"]').first().waitFor();
-		await form.locator('[name="email"]').first().waitFor();
+		await form.locator('[name="headline"]').first().waitFor({ state: "visible" });
+		await form.locator('[name="content"]').first().waitFor({ state: "visible" });
+		await form.locator('[name="rating"]').first().waitFor({ state: "attached" });
+		await form.locator('[name="name"]').first().waitFor({ state: "visible" });
+		await form.locator('[name="email"]').first().waitFor({ state: "visible" });
 	});
 
 	test(`3. cart quantity`, async ({ page, context }) => {

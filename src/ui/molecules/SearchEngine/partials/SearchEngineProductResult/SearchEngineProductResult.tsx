@@ -30,7 +30,7 @@ export const SearchEngineProductResult = ({
 				)}
 				<div className={"flex flex-col gap-1"} data-testid="product-info">
 					<p data-testid="product-name">{name}</p>
-					<p data-testid="product-price">{formatMoney(price / 100)}</p>
+					<p data-testid="product-price">{formatMoney(price)}</p>
 				</div>
 			</NextLink>
 		</Button>

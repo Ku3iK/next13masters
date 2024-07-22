@@ -1,87 +1,61 @@
-import { Suspense } from "react";
-import { type Metadata } from "next/types";
 import { notFound } from "next/navigation";
-import { revalidateTag } from "next/cache";
 import { productGetById, productsGetList } from "@/api/products/products";
-import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts/SuggestedProducts";
-import { ProductImage } from "@/ui/atoms/ProductImage/ProductImage";
-import { formatMoney } from "@/utils/formatMoney";
-import { StockStatus } from "@/ui/atoms/StockStatus/StockStatus";
-import { addProductToCart, getOrCreateCart } from "@/api/cart/cart";
-import { AddToCartButton } from "@/ui/atoms/AddToCartButton/AddToCartButton";
-import { ProductReviewForm } from "@/ui/organisms/ProductReviewForm/ProductReviewForm";
+import { ProductImage } from "@/components/views/ProductImage";
+import { type PageMetadata } from "@/app/types";
+import { type ProductPageParams } from "@/app/product/[productId]/types";
+import { generatePageTitle } from "@/utils/metadata/generatePageTitle";
+import { ProductDetails } from "@/components/views/ProductDetails";
+import { LatestProductsSuspense } from "@/components/containers/LatestProducts";
+import { ProductReviews } from "@/components/containers/ProductReviews";
+import { ProductReviewForm } from "@/components/features/ProductReviewForm";
 
 export const generateStaticParams = async () => {
 	const products = await productsGetList();
 
-	return products.slice(0, 5).map((product) => ({
-		productId: product.id,
+	return products.slice(0, 5).map(({ id: productId }) => ({
+		productId,
 	}));
 };
 
-export const generateMetadata = async ({
-	params,
-}: {
-	params: { productId: string };
-}): Promise<Metadata> => {
+export const generateMetadata = async ({ params }: ProductPageParams): PageMetadata => {
 	const product = await productGetById(params.productId);
 
 	if (!product) notFound();
 
+	const { name, description } = product;
+
 	return {
-		title: `${product.name} - Sklep internetowy`,
-		description: product.description,
+		title: generatePageTitle(name),
+		description,
 	};
 };
 
-export default async function SingleProductPage({ params }: { params: { productId: string } }) {
-	const product = await productGetById(params.productId);
+export default async function SingleProductPage({ params }: ProductPageParams) {
+	const { productId } = params;
+	const product = await productGetById(productId);
 
 	if (!product) notFound();
 
-	async function addProductToCartAction(_formData: FormData) {
-		"use server";
-
-		const cart = await getOrCreateCart();
-		await addProductToCart(cart.id, params.productId);
-
-		revalidateTag("cart");
-	}
+	const { images, name, categories, ...restProps } = product;
+	const productThumbnail = images[0];
 
 	return (
-		<div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-12 gap-x-8 bg-white">
-			<main className="col-span-9 px-8 py-4 shadow-xl">
-				<article className="flex w-full flex-col gap-12">
-					{product.images[0] && (
-						<ProductImage image={{ src: product.images[0].url, alt: product.name }} />
-					)}
-					<div>
-						<h1 className="mb-10 font-bold">{product.name}</h1>
-						<p className="mb-6">{product.description}</p>
-						{product.categories[0] && (
-							<p className="mb-6">
-								Category: <span className="font-medium">{product.categories[0].name}</span>
-							</p>
-						)}
-						<p className="mb-4 text-sm font-medium text-gray-900">
-							Price: {formatMoney(product.price / 100)}
-						</p>
-
-						<StockStatus isAvailable={true} />
-
-						<form className="mb-28" action={addProductToCartAction}>
-							<AddToCartButton />
-						</form>
-
-						<ProductReviewForm productId={params.productId} reviews={product.reviews} />
+		<div className="flex min-h-screen w-full flex-col">
+			<div className="relative grid gap-8 py-12 md:grid-cols-2">
+				{productThumbnail && (
+					<div className={"mx-auto md:mx-0"}>
+						<ProductImage image={{ src: productThumbnail.url, alt: name }} />
 					</div>
-				</article>
-			</main>
-			<aside className="col-span-3 px-8 py-4 shadow-xl">
-				<Suspense fallback={"Loading..."}>
-					<SuggestedProducts isListView={true} />
-				</Suspense>
-			</aside>
+				)}
+				<div className={"sticky top-24 h-fit"}>
+					<ProductDetails {...restProps} name={name} category={categories[0]?.name} />
+				</div>
+			</div>
+			<div className="col-span-2 grid gap-8">
+				<LatestProductsSuspense />
+				<ProductReviewForm productId={productId} />
+				<ProductReviews productId={productId} />
+			</div>
 		</div>
 	);
 }

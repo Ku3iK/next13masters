@@ -18,7 +18,7 @@ export const ProductListItemDescription = ({
 			</div>
 			<p className="text-sm font-medium text-gray-900">
 				<span className="sr-only">Price:</span>{" "}
-				<span data-testid="product-price">{formatMoney(price / 100)}</span>
+				<span data-testid="product-price">{formatMoney(price)}</span>
 			</p>
 		</div>
 	);

@@ -2421,6 +2421,555 @@ export type CurrencyWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
+/** This model can be used, for example, as a simple form on a website, app, database with several text fields already added. */
+export type DemoModel = Entity & Node & {
+  content: DemoModelContentRichText;
+  /** The time the document was created */
+  createdAt: Scalars['DateTime']['output'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<DemoModel>;
+  /** List of DemoModel versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID']['output'];
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  slug: Scalars['String']['output'];
+  /** System stage field */
+  stage: Stage;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime']['output'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+};
+
+
+/** This model can be used, for example, as a simple form on a website, app, database with several text fields already added. */
+export type DemoModelCreatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+/** This model can be used, for example, as a simple form on a website, app, database with several text fields already added. */
+export type DemoModelDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean']['input'];
+  inheritLocale?: Scalars['Boolean']['input'];
+  stages?: Array<Stage>;
+};
+
+
+/** This model can be used, for example, as a simple form on a website, app, database with several text fields already added. */
+export type DemoModelHistoryArgs = {
+  limit?: Scalars['Int']['input'];
+  skip?: Scalars['Int']['input'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+/** This model can be used, for example, as a simple form on a website, app, database with several text fields already added. */
+export type DemoModelPublishedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+/** This model can be used, for example, as a simple form on a website, app, database with several text fields already added. */
+export type DemoModelScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+/** This model can be used, for example, as a simple form on a website, app, database with several text fields already added. */
+export type DemoModelUpdatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type DemoModelConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: DemoModelWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type DemoModelConnection = {
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<DemoModelEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type DemoModelContentRichText = {
+  /** Returns HTMl representation */
+  html: Scalars['String']['output'];
+  json: Scalars['RichTextAST']['output'];
+  /** Returns Markdown representation */
+  markdown: Scalars['String']['output'];
+  /** @deprecated Please use the 'json' field */
+  raw: Scalars['RichTextAST']['output'];
+  references: Array<DemoModelContentRichTextEmbeddedTypes>;
+  /** Returns plain-text contents of RichText */
+  text: Scalars['String']['output'];
+};
+
+
+export type DemoModelContentRichTextReferencesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type DemoModelContentRichTextEmbeddedTypes = Asset;
+
+export type DemoModelCreateInput = {
+  content: Scalars['RichTextAST']['input'];
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  slug: Scalars['String']['input'];
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type DemoModelCreateManyInlineInput = {
+  /** Connect multiple existing DemoModel documents */
+  connect?: InputMaybe<Array<DemoModelWhereUniqueInput>>;
+  /** Create and connect multiple existing DemoModel documents */
+  create?: InputMaybe<Array<DemoModelCreateInput>>;
+};
+
+export type DemoModelCreateOneInlineInput = {
+  /** Connect one existing DemoModel document */
+  connect?: InputMaybe<DemoModelWhereUniqueInput>;
+  /** Create and connect one DemoModel document */
+  create?: InputMaybe<DemoModelCreateInput>;
+};
+
+/** An edge in a connection. */
+export type DemoModelEdge = {
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: DemoModel;
+};
+
+/** Identifies documents */
+export type DemoModelManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<DemoModelWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<DemoModelWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<DemoModelWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  documentInStages_every?: InputMaybe<DemoModelWhereStageInput>;
+  documentInStages_none?: InputMaybe<DemoModelWhereStageInput>;
+  documentInStages_some?: InputMaybe<DemoModelWhereStageInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  slug_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  subtitle_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  subtitle_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  subtitle_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  subtitle_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  subtitle_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  subtitle_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  subtitle_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  subtitle_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  subtitle_starts_with?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  title_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  title_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  title_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  title_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  title_starts_with?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+export type DemoModelOrderByInput =
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'publishedAt_ASC'
+  | 'publishedAt_DESC'
+  | 'slug_ASC'
+  | 'slug_DESC'
+  | 'subtitle_ASC'
+  | 'subtitle_DESC'
+  | 'title_ASC'
+  | 'title_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC';
+
+export type DemoModelUpdateInput = {
+  content?: InputMaybe<Scalars['RichTextAST']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DemoModelUpdateManyInlineInput = {
+  /** Connect multiple existing DemoModel documents */
+  connect?: InputMaybe<Array<DemoModelConnectInput>>;
+  /** Create and connect multiple DemoModel documents */
+  create?: InputMaybe<Array<DemoModelCreateInput>>;
+  /** Delete multiple DemoModel documents */
+  delete?: InputMaybe<Array<DemoModelWhereUniqueInput>>;
+  /** Disconnect multiple DemoModel documents */
+  disconnect?: InputMaybe<Array<DemoModelWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing DemoModel documents */
+  set?: InputMaybe<Array<DemoModelWhereUniqueInput>>;
+  /** Update multiple DemoModel documents */
+  update?: InputMaybe<Array<DemoModelUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple DemoModel documents */
+  upsert?: InputMaybe<Array<DemoModelUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type DemoModelUpdateManyInput = {
+  content?: InputMaybe<Scalars['RichTextAST']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DemoModelUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: DemoModelUpdateManyInput;
+  /** Document search */
+  where: DemoModelWhereInput;
+};
+
+export type DemoModelUpdateOneInlineInput = {
+  /** Connect existing DemoModel document */
+  connect?: InputMaybe<DemoModelWhereUniqueInput>;
+  /** Create and connect one DemoModel document */
+  create?: InputMaybe<DemoModelCreateInput>;
+  /** Delete currently connected DemoModel document */
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Disconnect currently connected DemoModel document */
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Update single DemoModel document */
+  update?: InputMaybe<DemoModelUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single DemoModel document */
+  upsert?: InputMaybe<DemoModelUpsertWithNestedWhereUniqueInput>;
+};
+
+export type DemoModelUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: DemoModelUpdateInput;
+  /** Unique document search */
+  where: DemoModelWhereUniqueInput;
+};
+
+export type DemoModelUpsertInput = {
+  /** Create document if it didn't exist */
+  create: DemoModelCreateInput;
+  /** Update document if it exists */
+  update: DemoModelUpdateInput;
+};
+
+export type DemoModelUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: DemoModelUpsertInput;
+  /** Unique document search */
+  where: DemoModelWhereUniqueInput;
+};
+
+/** This contains a set of filters that can be used to compare values internally */
+export type DemoModelWhereComparatorInput = {
+  /** This field can be used to request to check if the entry is outdated by internal comparison */
+  outdated_to?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Identifies documents */
+export type DemoModelWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<DemoModelWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<DemoModelWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<DemoModelWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  documentInStages_every?: InputMaybe<DemoModelWhereStageInput>;
+  documentInStages_none?: InputMaybe<DemoModelWhereStageInput>;
+  documentInStages_some?: InputMaybe<DemoModelWhereStageInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  slug_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  subtitle_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  subtitle_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  subtitle_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  subtitle_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  subtitle_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  subtitle_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  subtitle_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  subtitle_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  subtitle_starts_with?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  title_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  title_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  title_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  title_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  title_starts_with?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
+export type DemoModelWhereStageInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<DemoModelWhereStageInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<DemoModelWhereStageInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<DemoModelWhereStageInput>>;
+  /** This field contains fields which can be set as true or false to specify an internal comparison */
+  compareWithParent?: InputMaybe<DemoModelWhereComparatorInput>;
+  /** Specify the stage to compare with */
+  stage?: InputMaybe<Stage>;
+};
+
+/** References DemoModel record uniquely */
+export type DemoModelWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type DocumentFileTypes =
   | 'doc'
   | 'docx'
@@ -2500,6 +3049,8 @@ export type EntityTypeName =
   /** Collection of products, e.g. Winter Sale. */
   | 'Collection'
   | 'Currency'
+  /** This model can be used, for example, as a simple form on a website, app, database with several text fields already added. */
+  | 'DemoModel'
   | 'Order'
   | 'OrderItem'
   | 'Product'
@@ -2585,6 +3136,8 @@ export type Mutation = {
   createCollection?: Maybe<Collection>;
   /** Create one currency */
   createCurrency?: Maybe<Currency>;
+  /** Create one demoModel */
+  createDemoModel?: Maybe<DemoModel>;
   /** Create one order */
   createOrder?: Maybe<Order>;
   /** Create one orderItem */
@@ -2609,6 +3162,8 @@ export type Mutation = {
   deleteCollection?: Maybe<Collection>;
   /** Delete one currency from _all_ existing stages. Returns deleted document. */
   deleteCurrency?: Maybe<Currency>;
+  /** Delete one demoModel from _all_ existing stages. Returns deleted document. */
+  deleteDemoModel?: Maybe<DemoModel>;
   /**
    * Delete many Asset documents
    * @deprecated Please use the new paginated many mutation (deleteManyAssetsConnection)
@@ -2637,6 +3192,13 @@ export type Mutation = {
   deleteManyCurrencies: BatchPayload;
   /** Delete many Currency documents, return deleted documents */
   deleteManyCurrenciesConnection: CurrencyConnection;
+  /**
+   * Delete many DemoModel documents
+   * @deprecated Please use the new paginated many mutation (deleteManyDemoModelsConnection)
+   */
+  deleteManyDemoModels: BatchPayload;
+  /** Delete many DemoModel documents, return deleted documents */
+  deleteManyDemoModelsConnection: DemoModelConnection;
   /**
    * Delete many OrderItem documents
    * @deprecated Please use the new paginated many mutation (deleteManyOrderItemsConnection)
@@ -2712,6 +3274,8 @@ export type Mutation = {
   publishCollection?: Maybe<Collection>;
   /** Publish one currency */
   publishCurrency?: Maybe<Currency>;
+  /** Publish one demoModel */
+  publishDemoModel?: Maybe<DemoModel>;
   /**
    * Publish many Asset documents
    * @deprecated Please use the new paginated many mutation (publishManyAssetsConnection)
@@ -2740,6 +3304,13 @@ export type Mutation = {
   publishManyCurrencies: BatchPayload;
   /** Publish many Currency documents */
   publishManyCurrenciesConnection: CurrencyConnection;
+  /**
+   * Publish many DemoModel documents
+   * @deprecated Please use the new paginated many mutation (publishManyDemoModelsConnection)
+   */
+  publishManyDemoModels: BatchPayload;
+  /** Publish many DemoModel documents */
+  publishManyDemoModelsConnection: DemoModelConnection;
   /**
    * Publish many OrderItem documents
    * @deprecated Please use the new paginated many mutation (publishManyOrderItemsConnection)
@@ -2811,6 +3382,8 @@ export type Mutation = {
   schedulePublishCollection?: Maybe<Collection>;
   /** Schedule to publish one currency */
   schedulePublishCurrency?: Maybe<Currency>;
+  /** Schedule to publish one demoModel */
+  schedulePublishDemoModel?: Maybe<DemoModel>;
   /** Schedule to publish one order */
   schedulePublishOrder?: Maybe<Order>;
   /** Schedule to publish one orderItem */
@@ -2833,6 +3406,8 @@ export type Mutation = {
   scheduleUnpublishCollection?: Maybe<Collection>;
   /** Unpublish one currency from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishCurrency?: Maybe<Currency>;
+  /** Unpublish one demoModel from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishDemoModel?: Maybe<DemoModel>;
   /** Unpublish one order from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishOrder?: Maybe<Order>;
   /** Unpublish one orderItem from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -2855,6 +3430,8 @@ export type Mutation = {
   unpublishCollection?: Maybe<Collection>;
   /** Unpublish one currency from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishCurrency?: Maybe<Currency>;
+  /** Unpublish one demoModel from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishDemoModel?: Maybe<DemoModel>;
   /**
    * Unpublish many Asset documents
    * @deprecated Please use the new paginated many mutation (unpublishManyAssetsConnection)
@@ -2883,6 +3460,13 @@ export type Mutation = {
   unpublishManyCurrencies: BatchPayload;
   /** Find many Currency documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyCurrenciesConnection: CurrencyConnection;
+  /**
+   * Unpublish many DemoModel documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyDemoModelsConnection)
+   */
+  unpublishManyDemoModels: BatchPayload;
+  /** Find many DemoModel documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyDemoModelsConnection: DemoModelConnection;
   /**
    * Unpublish many OrderItem documents
    * @deprecated Please use the new paginated many mutation (unpublishManyOrderItemsConnection)
@@ -2954,6 +3538,8 @@ export type Mutation = {
   updateCollection?: Maybe<Collection>;
   /** Update one currency */
   updateCurrency?: Maybe<Currency>;
+  /** Update one demoModel */
+  updateDemoModel?: Maybe<DemoModel>;
   /**
    * Update many assets
    * @deprecated Please use the new paginated many mutation (updateManyAssetsConnection)
@@ -2982,6 +3568,13 @@ export type Mutation = {
   updateManyCurrencies: BatchPayload;
   /** Update many Currency documents */
   updateManyCurrenciesConnection: CurrencyConnection;
+  /**
+   * Update many demoModels
+   * @deprecated Please use the new paginated many mutation (updateManyDemoModelsConnection)
+   */
+  updateManyDemoModels: BatchPayload;
+  /** Update many DemoModel documents */
+  updateManyDemoModelsConnection: DemoModelConnection;
   /**
    * Update many orderItems
    * @deprecated Please use the new paginated many mutation (updateManyOrderItemsConnection)
@@ -3055,6 +3648,8 @@ export type Mutation = {
   upsertCollection?: Maybe<Collection>;
   /** Upsert one currency */
   upsertCurrency?: Maybe<Currency>;
+  /** Upsert one demoModel */
+  upsertDemoModel?: Maybe<DemoModel>;
   /** Upsert one order */
   upsertOrder?: Maybe<Order>;
   /** Upsert one orderItem */
@@ -3089,6 +3684,11 @@ export type MutationCreateCollectionArgs = {
 
 export type MutationCreateCurrencyArgs = {
   data: CurrencyCreateInput;
+};
+
+
+export type MutationCreateDemoModelArgs = {
+  data: DemoModelCreateInput;
 };
 
 
@@ -3152,6 +3752,11 @@ export type MutationDeleteCurrencyArgs = {
 };
 
 
+export type MutationDeleteDemoModelArgs = {
+  where: DemoModelWhereUniqueInput;
+};
+
+
 export type MutationDeleteManyAssetsArgs = {
   where?: InputMaybe<AssetManyWhereInput>;
 };
@@ -3209,6 +3814,21 @@ export type MutationDeleteManyCurrenciesConnectionArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CurrencyManyWhereInput>;
+};
+
+
+export type MutationDeleteManyDemoModelsArgs = {
+  where?: InputMaybe<DemoModelManyWhereInput>;
+};
+
+
+export type MutationDeleteManyDemoModelsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<DemoModelManyWhereInput>;
 };
 
 
@@ -3395,6 +4015,12 @@ export type MutationPublishCurrencyArgs = {
 };
 
 
+export type MutationPublishDemoModelArgs = {
+  to?: Array<Stage>;
+  where: DemoModelWhereUniqueInput;
+};
+
+
 export type MutationPublishManyAssetsArgs = {
   locales?: InputMaybe<Array<Locale>>;
   publishBase?: InputMaybe<Scalars['Boolean']['input']>;
@@ -3482,6 +4108,24 @@ export type MutationPublishManyCurrenciesConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   to?: Array<Stage>;
   where?: InputMaybe<CurrencyManyWhereInput>;
+};
+
+
+export type MutationPublishManyDemoModelsArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<DemoModelManyWhereInput>;
+};
+
+
+export type MutationPublishManyDemoModelsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<DemoModelManyWhereInput>;
 };
 
 
@@ -3730,6 +4374,14 @@ export type MutationSchedulePublishCurrencyArgs = {
 };
 
 
+export type MutationSchedulePublishDemoModelArgs = {
+  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
+  releaseId?: InputMaybe<Scalars['String']['input']>;
+  to?: Array<Stage>;
+  where: DemoModelWhereUniqueInput;
+};
+
+
 export type MutationSchedulePublishOrderArgs = {
   releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
   releaseId?: InputMaybe<Scalars['String']['input']>;
@@ -3836,6 +4488,14 @@ export type MutationScheduleUnpublishCurrencyArgs = {
 };
 
 
+export type MutationScheduleUnpublishDemoModelArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
+  releaseId?: InputMaybe<Scalars['String']['input']>;
+  where: DemoModelWhereUniqueInput;
+};
+
+
 export type MutationScheduleUnpublishOrderArgs = {
   from?: Array<Stage>;
   releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -3930,6 +4590,12 @@ export type MutationUnpublishCurrencyArgs = {
 };
 
 
+export type MutationUnpublishDemoModelArgs = {
+  from?: Array<Stage>;
+  where: DemoModelWhereUniqueInput;
+};
+
+
 export type MutationUnpublishManyAssetsArgs = {
   from?: Array<Stage>;
   locales?: InputMaybe<Array<Locale>>;
@@ -4011,6 +4677,24 @@ export type MutationUnpublishManyCurrenciesConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   stage?: InputMaybe<Stage>;
   where?: InputMaybe<CurrencyManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyDemoModelsArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<DemoModelManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyDemoModelsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<DemoModelManyWhereInput>;
 };
 
 
@@ -4230,6 +4914,12 @@ export type MutationUpdateCurrencyArgs = {
 };
 
 
+export type MutationUpdateDemoModelArgs = {
+  data: DemoModelUpdateInput;
+  where: DemoModelWhereUniqueInput;
+};
+
+
 export type MutationUpdateManyAssetsArgs = {
   data: AssetUpdateManyInput;
   where?: InputMaybe<AssetManyWhereInput>;
@@ -4295,6 +4985,23 @@ export type MutationUpdateManyCurrenciesConnectionArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CurrencyManyWhereInput>;
+};
+
+
+export type MutationUpdateManyDemoModelsArgs = {
+  data: DemoModelUpdateManyInput;
+  where?: InputMaybe<DemoModelManyWhereInput>;
+};
+
+
+export type MutationUpdateManyDemoModelsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  data: DemoModelUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<DemoModelManyWhereInput>;
 };
 
 
@@ -4486,6 +5193,12 @@ export type MutationUpsertCollectionArgs = {
 export type MutationUpsertCurrencyArgs = {
   upsert: CurrencyUpsertInput;
   where: CurrencyWhereUniqueInput;
+};
+
+
+export type MutationUpsertDemoModelArgs = {
+  upsert: DemoModelUpsertInput;
+  where: DemoModelWhereUniqueInput;
 };
 
 
@@ -5571,6 +6284,7 @@ export type Product = Entity & Node & {
   /** The unique identifier */
   id: Scalars['ID']['output'];
   images: Array<Asset>;
+  inStock: Scalars['Boolean']['output'];
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -6291,6 +7005,7 @@ export type ProductCreateInput = {
   /** description input for default locale (en) */
   description: Scalars['String']['input'];
   images?: InputMaybe<AssetCreateManyInlineInput>;
+  inStock: Scalars['Boolean']['input'];
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<ProductCreateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -6404,6 +7119,9 @@ export type ProductManyWhereInput = {
   images_every?: InputMaybe<AssetWhereInput>;
   images_none?: InputMaybe<AssetWhereInput>;
   images_some?: InputMaybe<AssetWhereInput>;
+  inStock?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  inStock_not?: InputMaybe<Scalars['Boolean']['input']>;
   orderItems_every?: InputMaybe<OrderItemWhereInput>;
   orderItems_none?: InputMaybe<OrderItemWhereInput>;
   orderItems_some?: InputMaybe<OrderItemWhereInput>;
@@ -6458,6 +7176,8 @@ export type ProductOrderByInput =
   | 'description_DESC'
   | 'id_ASC'
   | 'id_DESC'
+  | 'inStock_ASC'
+  | 'inStock_DESC'
   | 'name_ASC'
   | 'name_DESC'
   | 'price_ASC'
@@ -7558,6 +8278,7 @@ export type ProductUpdateInput = {
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
   images?: InputMaybe<AssetUpdateManyInlineInput>;
+  inStock?: InputMaybe<Scalars['Boolean']['input']>;
   /** Manage document localizations */
   localizations?: InputMaybe<ProductUpdateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -7613,6 +8334,7 @@ export type ProductUpdateManyInlineInput = {
 export type ProductUpdateManyInput = {
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
+  inStock?: InputMaybe<Scalars['Boolean']['input']>;
   /** Optional updates to localizations */
   localizations?: InputMaybe<ProductUpdateManyLocalizationsInput>;
   /** price input for default locale (en) */
@@ -7861,6 +8583,9 @@ export type ProductWhereInput = {
   images_every?: InputMaybe<AssetWhereInput>;
   images_none?: InputMaybe<AssetWhereInput>;
   images_some?: InputMaybe<AssetWhereInput>;
+  inStock?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  inStock_not?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   name_contains?: InputMaybe<Scalars['String']['input']>;
@@ -8020,6 +8745,14 @@ export type Query = {
   currency?: Maybe<Currency>;
   /** Retrieve document version */
   currencyVersion?: Maybe<DocumentVersion>;
+  /** Retrieve a single demoModel */
+  demoModel?: Maybe<DemoModel>;
+  /** Retrieve document version */
+  demoModelVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple demoModels */
+  demoModels: Array<DemoModel>;
+  /** Retrieve multiple demoModels using the Relay connection interface */
+  demoModelsConnection: DemoModelConnection;
   /** Fetches an object given its ID */
   entities?: Maybe<Array<Entity>>;
   /** Fetches an object given its ID */
@@ -8250,6 +8983,44 @@ export type QueryCurrencyArgs = {
 
 export type QueryCurrencyVersionArgs = {
   where: VersionWhereInput;
+};
+
+
+export type QueryDemoModelArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: DemoModelWhereUniqueInput;
+};
+
+
+export type QueryDemoModelVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryDemoModelsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<DemoModelOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: Stage;
+  where?: InputMaybe<DemoModelWhereInput>;
+};
+
+
+export type QueryDemoModelsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<DemoModelOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: Stage;
+  where?: InputMaybe<DemoModelWhereInput>;
 };
 
 
@@ -9344,7 +10115,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | Category | Collection | Currency | Order | OrderItem | Product | ProductColorVariant | ProductSizeColorVariant | ProductSizeVariant | Review;
+export type ScheduledOperationAffectedDocument = Asset | Category | Collection | Currency | DemoModel | Order | OrderItem | Product | ProductColorVariant | ProductSizeColorVariant | ProductSizeVariant | Review;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -10836,7 +11607,7 @@ export type ProductGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, reviews: Array<{ id: string, rating: number, content: string, name: string, email: string, headline: string }>, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null };
+export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, inStock: boolean, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null };
 
 export type ProductListItemFragment = { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }>, reviews: Array<{ rating: number }> };
 
@@ -10907,6 +11678,16 @@ export type ProductsGetTotalNumberQueryVariables = Exact<{ [key: string]: never;
 
 export type ProductsGetTotalNumberQuery = { productsConnection: { aggregate: { count: number } } };
 
+export type ReviewFieldsFragment = { id: string, content: string, email: string, headline: string, name: string, publishedAt?: unknown | null, rating: number, publishedBy?: { name: string, picture?: string | null, id: string } | null };
+
+export type ReviewsByProductIdQueryVariables = Exact<{
+  productId: Scalars['ID']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ReviewsByProductIdQuery = { reviews: Array<{ id: string, content: string, email: string, headline: string, name: string, publishedAt?: unknown | null, rating: number, publishedBy?: { name: string, picture?: string | null, id: string } | null }> };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -10952,6 +11733,22 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
+export const ReviewFieldsFragmentDoc = new TypedDocumentString(`
+    fragment ReviewFields on Review {
+  id
+  content
+  email
+  headline
+  name
+  publishedAt
+  rating
+  publishedBy {
+    name
+    picture
+    id
+  }
+}
+    `, {"fragmentName":"ReviewFields"}) as unknown as TypedDocumentString<ReviewFieldsFragment, unknown>;
 export const CartAddItemDocument = new TypedDocumentString(`
     mutation CartAddItem($cartId: ID!, $productId: ID!, $total: Int!) {
   createOrderItem(
@@ -11055,14 +11852,6 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
     id
     name
     description
-    reviews(last: 10) {
-      id
-      rating
-      content
-      name
-      email
-      headline
-    }
     categories(first: 1) {
       name
     }
@@ -11070,6 +11859,7 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
       url
     }
     price
+    inStock
   }
 }
     `) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
@@ -11258,3 +12048,27 @@ export const ProductsGetTotalNumberDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ProductsGetTotalNumberQuery, ProductsGetTotalNumberQueryVariables>;
+export const ReviewsByProductIdDocument = new TypedDocumentString(`
+    query ReviewsByProductId($productId: ID!, $first: Int = 10) {
+  reviews(
+    where: {product: {id: $productId}}
+    first: $first
+    orderBy: publishedAt_DESC
+  ) {
+    ...ReviewFields
+  }
+}
+    fragment ReviewFields on Review {
+  id
+  content
+  email
+  headline
+  name
+  publishedAt
+  rating
+  publishedBy {
+    name
+    picture
+    id
+  }
+}`) as unknown as TypedDocumentString<ReviewsByProductIdQuery, ReviewsByProductIdQueryVariables>;

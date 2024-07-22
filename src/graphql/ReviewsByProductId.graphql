@@ -1,0 +1,5 @@
+query ReviewsByProductId($productId: ID!, $first: Int = 10) {
+    reviews(where: { product: { id: $productId } }, first: $first, orderBy: publishedAt_DESC) {
+        ...ReviewFields
+    }
+}

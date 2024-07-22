@@ -8,7 +8,7 @@ export const routes: Routes = {
 	},
 	categories: {
 		name: "categories",
-		url: (params) => `/categories/${params?.category || ""}` as Route,
+		url: (params) => `/categories/${params?.category.toLowerCase() || ""}` as Route,
 	},
 	homepage: {
 		name: "homepage",
@@ -24,6 +24,6 @@ export const routes: Routes = {
 	},
 	search: {
 		name: "search",
-		url: (params) => `/search?query=${params?.query || ""}`,
+		url: (params) => `/search?query=${params?.query.toLowerCase() || ""}`,
 	},
 };

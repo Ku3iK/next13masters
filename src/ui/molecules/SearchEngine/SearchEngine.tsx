@@ -10,6 +10,7 @@ import { useProductsSearchQuery } from "@/services/queries/hooks/useProductsSear
 import { routes } from "@/routes";
 import { SearchEngineProductResult } from "@/ui/molecules/SearchEngine/partials/SearchEngineProductResult";
 import { useDebounce } from "@/hooks/useDebounce";
+import { DialogTitle } from "@/components/ui/dialog";
 
 const SEARCH_ENGINE_TEXT = "Type a search...";
 
@@ -90,11 +91,14 @@ const SearchEngineComponent = () => {
 				<span className="sr-only">{SEARCH_ENGINE_TEXT}</span>
 			</Button>
 			<CommandDialog open={isOpen} onOpenChange={setIsOpen}>
+				<DialogTitle asChild>
+					<h2 className={"sr-only"}>Search</h2>
+				</DialogTitle>
 				<CommandInput
 					placeholder={SEARCH_ENGINE_TEXT}
 					value={searchTerm}
 					onValueChange={setSearchTerm}
-					data-testid="search-input"
+					data-testid="search-engine-input"
 				/>
 				<CommandList>{renderContent()}</CommandList>
 			</CommandDialog>
