@@ -22,10 +22,9 @@ test.describe("Collection and Search Tests", () => {
 		const searchInput = page.getByTestId("search-input");
 		await searchInput.type(productName!);
 
-		await page.waitForTimeout(300);
-
 		const searchResults = page.getByTestId("search-results");
 		await searchResults.waitFor();
+
 		const matchingProducts = searchResults.locator(`li:has-text("${productName}")`);
 		const matchingProductsCount = await matchingProducts.count();
 		expect(matchingProductsCount).toBeGreaterThan(0);
@@ -33,11 +32,12 @@ test.describe("Collection and Search Tests", () => {
 		const seeAllResultsButton = page.getByTestId("search-results-see-all");
 		await seeAllResultsButton.click();
 
-		await page.waitForURL(`**/search?query=${encodeURIComponent(productName!)}`);
-		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
+		await page.waitForNavigation({ waitUntil: "networkidle" });
+		await page.waitForSelector('[aria-busy="true"]', { state: "hidden" });
 
 		const resultsPageList = page.getByTestId("products-list");
 		await resultsPageList.waitFor();
+
 		const resultsPageProductLink = resultsPageList.locator(`li:has-text("${productName}")`);
 		const resultsPageCount = await resultsPageProductLink.count();
 		expect(resultsPageCount).toBeGreaterThan(0);
@@ -156,15 +156,12 @@ test.describe("Collection and Search Tests", () => {
 		const searchInput = page.getByTestId("search-input");
 		await searchInput.type(productName!, { delay: 166 });
 
-		// Listen for network requests
 		const requests: string[] = [];
 		page.on("request", (request) => {
 			if (request.url().includes("/search?query=")) {
 				requests.push(request.url());
 			}
 		});
-
-		await page.waitForTimeout(300);
 
 		const searchResults = page.getByTestId("search-results");
 		await searchResults.waitFor();
@@ -175,11 +172,12 @@ test.describe("Collection and Search Tests", () => {
 		const seeAllResultsButton = page.getByTestId("search-results-see-all");
 		await seeAllResultsButton.click();
 
-		await page.waitForURL(`**/search?query=${encodeURIComponent(productName!)}`);
-		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
+		await page.waitForNavigation({ waitUntil: "networkidle" });
+		await page.waitForSelector('[aria-busy="true"]', { state: "hidden" });
 
 		const resultsPageList = page.getByTestId("products-list");
 		await resultsPageList.waitFor();
+
 		const resultsPageProductLink = resultsPageList.locator(`li:has-text("${productName}")`);
 		const resultsPageCount = await resultsPageProductLink.count();
 		expect(resultsPageCount).toBeGreaterThan(0);
@@ -191,13 +189,11 @@ test.describe("Collection and Search Tests", () => {
 	test(`8. keyboard shortcut to open search engine`, async ({ page }) => {
 		await page.goto("/");
 
-		page.on("console", (msg) => console.log("PAGE LOG:", msg.text()));
-
 		await page.evaluate(() => {
 			document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true }));
 		});
 
-		const searchInput = page.getByTestId("search-input");
+		const searchInput = page.getByTestId("search-engine-input");
 		await expect(searchInput).toBeVisible({ timeout: 10000 });
 
 		await page.keyboard.press("Escape");

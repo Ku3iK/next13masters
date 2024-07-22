@@ -94,7 +94,7 @@ const SearchEngineComponent = () => {
 					placeholder={SEARCH_ENGINE_TEXT}
 					value={searchTerm}
 					onValueChange={setSearchTerm}
-					data-testid="search-input"
+					data-testid="search-engine-input"
 				/>
 				<CommandList>{renderContent()}</CommandList>
 			</CommandDialog>
