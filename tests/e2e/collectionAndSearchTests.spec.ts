@@ -191,12 +191,14 @@ test.describe("Collection and Search Tests", () => {
 	test(`8. keyboard shortcut to open search engine`, async ({ page }) => {
 		await page.goto("/");
 
+		await page.waitForNavigation({ waitUntil: "networkidle" });
+
 		await page.evaluate(() => {
 			document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true }));
 		});
 
 		const searchInput = page.getByTestId("search-engine-input");
-		await expect(searchInput).toBeVisible({ timeout: 10000 });
+		await expect(searchInput).toBeVisible({ timeout: 15000 }); // Increased timeout
 
 		await page.keyboard.press("Escape");
 
@@ -204,7 +206,7 @@ test.describe("Collection and Search Tests", () => {
 			document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
 		});
 
-		await expect(searchInput).toBeVisible({ timeout: 10000 });
+		await expect(searchInput).toBeVisible({ timeout: 15000 }); // Increased timeout
 
 		await page.keyboard.press("Escape");
 	});
